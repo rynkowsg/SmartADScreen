@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="56px"  >
+
+        <TextView
+            android:layout_marginLeft="8dp"
+            android:text="3月24号"
+            android:id="@+id/fragment_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:textColor="#fefefe"
+            android:textSize="22px" />
+
+        <TextView
+            android:text="上午"
+            android:layout_toRightOf="@+id/fragment_date"
+            android:id="@+id/fragment_morning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_centerVertical="true"
+            android:textColor="#fefefe"
+            android:textSize="22px" />
+
+        <TextView
+            android:layout_toRightOf="@+id/fragment_morning"
+
+            android:id="@+id/fragment_time"
+            android:text="10:30"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_centerVertical="true"
+            android:textColor="#fefefe"
+            android:textSize="22px" />
+
+        <TextView
+            android:id="@+id/fragment_week"
+            android:text="星期五"
+            android:layout_toRightOf="@+id/fragment_time"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_centerVertical="true"
+            android:textColor="#fefefe"
+            android:textSize="22px" />
+
+        <TextView
+
+            android:id="@+id/fragment_areas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="24dp"
+            android:layout_toEndOf="@+id/fragment_week"
+            android:text="天河区"
+            android:textColor="#fefefe"
+            android:textSize="22px" />
+
+        <ImageView
+            android:id="@+id/wifi_show_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/wifi_ssid"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/wifi_four" />
+
+        <TextView
+            android:id="@+id/wifi_ssid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="startai"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/battery_state"
+            android:layout_marginRight="24dp"
+            android:textColor="#fefefe"
+            android:textSize="22px" />
+
+        <ImageView
+            android:id="@+id/battery_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/batter_number"
+            android:layout_marginRight="8dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/battery_four" />
+
+        <TextView
+            android:id="@+id/batter_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="30%"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"
+            android:textColor="#fefefe"
+            android:textSize="22px" />
+
+
+    </RelativeLayout>
+
+
+
+    <LinearLayout
+        android:id="@+id/ll_toolbar_warning"
+        android:layout_width="match_parent"
+        android:layout_height="60px"
+        android:background="@drawable/spring"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12px"
+            android:layout_marginLeft="30px"
+            android:layout_marginTop="14px"
+            android:src="@drawable/warning" />
+
+        <TextView
+            android:id="@+id/spring_text"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="22px"
+            android:text="阿里经过哈利卡过后判罚了呢·1"
+            android:textColor="#ffffff"
+            android:gravity="center"
+            android:textSize="24px" />
+    </LinearLayout>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/id_default_view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+</LinearLayout>

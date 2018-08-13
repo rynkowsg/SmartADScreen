@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">SmartADH5</string>
+    <string name="copy_right">Copyright 2017 StartAI SmartAD</string>
+    <string name="progress_tip">程序正在初始化,请稍等&#8230;</string>
+
+    <string name="empty" />
+
+    <string name="play_broadcast_name">当前播放内容：%s</string>
+    <string name="file_size">文件大小：%.2fMB</string>
+    <string name="download_fail">下载失败 %s</string>
+    <string name="download_suc">下载完成</string>
+    <string name="current_battery">当前电量：%s</string>
+    <string name="file_origin_internet">来源：文件服务器</string>
+    <string name="file_origin_inner">来源：主机分发</string>
+    <string name="spring_text">您的设备断网了,请检查路由器设备是否正常工作</string>
+    <string name="cancel">取消</string>
+    <string name="ok">确定</string>
+    <string name="audio_singer">歌手：%s</string>
+    <string name="audio_album">专辑：%s</string>
+
+    <string name="permission_rationale_message">您拒绝了我们申请授权，请同意授权，否则该功能不能正常使用！</string>
+    <string name="permission_denied_forever_message">我们需要一些权限，请手动设置到页面授权，否则该功能不能正常使用！</string>
+
+    <!--Keyboard 相关-->
+    <string name="keyboard_hide_soft_input">Hide Soft Input</string>
+    <string name="keyboard_show_soft_input">Show Soft Input</string>
+    <string name="keyboard_toggle_soft_input">Toggle Soft Input</string>
+    <string name="keyboard_show_dialog">Show Dialog</string>
+    <string name="keyboard_close_dialog">Close Dialog</string>
+</resources>

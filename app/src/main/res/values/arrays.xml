@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="description_file_suffix">
+        <item>imageplayer</item>
+        <item>mediaplayer</item>
+        <item>textplayer</item>
+        <item>urlplayer</item>
+        <item>musicplayer</item>
+    </string-array>
+
+    <string-array name="sync_type">
+        <item>每小时同步</item>
+        <!--<item>绝对时间同步</item>-->
+        <item>不同步</item>
+    </string-array>
+</resources>

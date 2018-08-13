@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="marquee">
+        <attr name="textcolor" format="color" />
+        <attr name="textSize" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="ClockView">
+        <attr name="pointRadius" format="dimension" />
+        <attr name="pointColor" format="color" />
+        <attr name="timeTextSize" format="dimension" />
+        <attr name="timeTextColor" format="color" />
+        <attr name="timeScaleWidth" format="dimension" />
+        <attr name="timeScaleHeight" format="dimension" />
+        <attr name="timeScaleColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="StatusBar">
+        <attr name="timeColor" format="color" />
+        <attr name="timeSize" format="dimension" />
+        <attr name="showTime" format="boolean" />
+        <attr name="logoSrc" format="reference" />
+        <attr name="showLogo" format="boolean" />
+        <attr name="logoAlpha" format="float"/>
+    </declare-styleable>
+
+
+</resources>
