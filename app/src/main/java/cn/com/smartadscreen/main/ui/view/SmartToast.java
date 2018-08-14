@@ -1,10 +1,11 @@
-package cn.com.startai.smartadh5.locallog;
+package cn.com.smartadscreen.main.ui.view;
 
 import android.support.annotation.NonNull;
 import android.widget.Toast;
 
-import cn.com.startai.smartadh5.extension.config.Config;
-import cn.com.startai.smartadh5.main.application.Application;
+import cn.com.smartadscreen.app.Application;
+import cn.com.smartadscreen.model.bean.config.Config;
+
 import es.dmoral.toasty.Toasty;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;

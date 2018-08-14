@@ -8,6 +8,8 @@ import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;
 import com.orhanobut.logger.PrettyFormatStrategy;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 
 import cn.com.startai.smartadh5.BuildConfig;
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
@@ -15,6 +17,7 @@ import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 public class Application extends MultiDexApplication {
     private static Application context ;
 //    private AppComponent mAppComponent;
+public static RefWatcher mRefWatcher ;
 
     @Override
     public void onCreate() {
@@ -35,7 +38,8 @@ public class Application extends MultiDexApplication {
                 return BuildConfig.LOG_DEBUG;
             }
         });
-
+        //初始化泄漏工具
+        mRefWatcher = LeakCanary.install(this);
         Utils.init(context);
 
     }
@@ -51,5 +55,7 @@ public class Application extends MultiDexApplication {
 //    private void init(){
 //        mAppComponent=DaggerAppComponent.builder().appModule(new AppModule()).build();
 //    }
+
+
 
 }

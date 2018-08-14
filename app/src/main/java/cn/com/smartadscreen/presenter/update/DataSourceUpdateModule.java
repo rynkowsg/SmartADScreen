@@ -38,6 +38,7 @@ import cn.com.smartadscreen.model.db.manager.DBManager;
 import cn.com.smartadscreen.model.db.manager.ServiceHelper;
 import cn.com.smartadscreen.model.sp.SPManager;
 import cn.com.smartadscreen.presenter.audio.AudioPlayer;
+import cn.com.smartadscreen.presenter.audio.IjkMusicPlayer;
 import cn.com.smartadscreen.presenter.manager.DownloadManager;
 import cn.com.smartadscreen.presenter.service.ClearDataIntentService;
 import cn.com.smartadscreen.presenter.service.DataUpdateIntentService;
@@ -139,6 +140,7 @@ public class DataSourceUpdateModule {
             SmartToast.info("收到一条播表消息!");
             //播放声音
             AudioPlayer.playHandleBroadcastMessageAudio();
+
         }
 
         Context context = Config.getContext();

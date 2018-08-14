@@ -1,4 +1,4 @@
-package cn.com.startai.smartadh5.processlogic.entity.event;
+package cn.com.smartadscreen.model.bean;
 
 /**
  * Created by Taro on 2017/3/24.

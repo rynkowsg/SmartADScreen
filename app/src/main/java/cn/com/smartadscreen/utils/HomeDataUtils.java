@@ -1,11 +1,12 @@
-package cn.com.startai.smartadh5.extension.utils.homedata;
+package cn.com.smartadscreen.utils;
 
 import android.util.Log;
 
 import java.util.Calendar;
 
+import cn.com.smartadscreen.model.bean.DeviceInfoBean;
 import cn.com.startai.smartadh5.R;
-import cn.com.startai.smartadh5.processlogic.entity.bean.DeviceInfoBean;
+
 
 /**
  * Created by chufeng on 2018/4/7.
@@ -73,7 +74,7 @@ public class HomeDataUtils {
     public Integer getbatterStateChange(int battery,int power){
         int batteryImageResId = 0;
         if(power==1){
-            batteryImageResId=R.drawable.battery_five;
+            batteryImageResId= R.drawable.battery_five;
         }else {
         if (battery <= 0) {
             batteryImageResId = R.drawable.battery_zeo;

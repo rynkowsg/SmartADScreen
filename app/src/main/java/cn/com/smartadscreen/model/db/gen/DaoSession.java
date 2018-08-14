@@ -13,6 +13,7 @@ import cn.com.smartadscreen.model.db.entity.BroadcastTable;
 import cn.com.smartadscreen.model.db.entity.DownloadTable;
 import cn.com.smartadscreen.model.db.entity.FileMapping;
 import cn.com.smartadscreen.model.db.entity.KNMapping;
+import cn.com.smartadscreen.model.db.entity.PlayInfo;
 import cn.com.smartadscreen.model.db.entity.Screen;
 import cn.com.smartadscreen.model.db.entity.Service;
 
@@ -21,6 +22,7 @@ import cn.com.smartadscreen.model.db.gen.BroadcastTableDao;
 import cn.com.smartadscreen.model.db.gen.DownloadTableDao;
 import cn.com.smartadscreen.model.db.gen.FileMappingDao;
 import cn.com.smartadscreen.model.db.gen.KNMappingDao;
+import cn.com.smartadscreen.model.db.gen.PlayInfoDao;
 import cn.com.smartadscreen.model.db.gen.ScreenDao;
 import cn.com.smartadscreen.model.db.gen.ServiceDao;
 
@@ -38,6 +40,7 @@ public class DaoSession extends AbstractDaoSession {
     private final DaoConfig downloadTableDaoConfig;
     private final DaoConfig fileMappingDaoConfig;
     private final DaoConfig kNMappingDaoConfig;
+    private final DaoConfig playInfoDaoConfig;
     private final DaoConfig screenDaoConfig;
     private final DaoConfig serviceDaoConfig;
 
@@ -46,6 +49,7 @@ public class DaoSession extends AbstractDaoSession {
     private final DownloadTableDao downloadTableDao;
     private final FileMappingDao fileMappingDao;
     private final KNMappingDao kNMappingDao;
+    private final PlayInfoDao playInfoDao;
     private final ScreenDao screenDao;
     private final ServiceDao serviceDao;
 
@@ -68,6 +72,9 @@ public class DaoSession extends AbstractDaoSession {
         kNMappingDaoConfig = daoConfigMap.get(KNMappingDao.class).clone();
         kNMappingDaoConfig.initIdentityScope(type);
 
+        playInfoDaoConfig = daoConfigMap.get(PlayInfoDao.class).clone();
+        playInfoDaoConfig.initIdentityScope(type);
+
         screenDaoConfig = daoConfigMap.get(ScreenDao.class).clone();
         screenDaoConfig.initIdentityScope(type);
 
@@ -79,6 +86,7 @@ public class DaoSession extends AbstractDaoSession {
         downloadTableDao = new DownloadTableDao(downloadTableDaoConfig, this);
         fileMappingDao = new FileMappingDao(fileMappingDaoConfig, this);
         kNMappingDao = new KNMappingDao(kNMappingDaoConfig, this);
+        playInfoDao = new PlayInfoDao(playInfoDaoConfig, this);
         screenDao = new ScreenDao(screenDaoConfig, this);
         serviceDao = new ServiceDao(serviceDaoConfig, this);
 
@@ -87,6 +95,7 @@ public class DaoSession extends AbstractDaoSession {
         registerDao(DownloadTable.class, downloadTableDao);
         registerDao(FileMapping.class, fileMappingDao);
         registerDao(KNMapping.class, kNMappingDao);
+        registerDao(PlayInfo.class, playInfoDao);
         registerDao(Screen.class, screenDao);
         registerDao(Service.class, serviceDao);
     }
@@ -97,6 +106,7 @@ public class DaoSession extends AbstractDaoSession {
         downloadTableDaoConfig.clearIdentityScope();
         fileMappingDaoConfig.clearIdentityScope();
         kNMappingDaoConfig.clearIdentityScope();
+        playInfoDaoConfig.clearIdentityScope();
         screenDaoConfig.clearIdentityScope();
         serviceDaoConfig.clearIdentityScope();
     }
@@ -119,6 +129,10 @@ public class DaoSession extends AbstractDaoSession {
 
     public KNMappingDao getKNMappingDao() {
         return kNMappingDao;
+    }
+
+    public PlayInfoDao getPlayInfoDao() {
+        return playInfoDao;
     }
 
     public ScreenDao getScreenDao() {

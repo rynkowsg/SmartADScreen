@@ -26,6 +26,7 @@ public class DaoMaster extends AbstractDaoMaster {
         DownloadTableDao.createTable(db, ifNotExists);
         FileMappingDao.createTable(db, ifNotExists);
         KNMappingDao.createTable(db, ifNotExists);
+        PlayInfoDao.createTable(db, ifNotExists);
         ScreenDao.createTable(db, ifNotExists);
         ServiceDao.createTable(db, ifNotExists);
     }
@@ -37,6 +38,7 @@ public class DaoMaster extends AbstractDaoMaster {
         DownloadTableDao.dropTable(db, ifExists);
         FileMappingDao.dropTable(db, ifExists);
         KNMappingDao.dropTable(db, ifExists);
+        PlayInfoDao.dropTable(db, ifExists);
         ScreenDao.dropTable(db, ifExists);
         ServiceDao.dropTable(db, ifExists);
     }
@@ -62,6 +64,7 @@ public class DaoMaster extends AbstractDaoMaster {
         registerDaoClass(DownloadTableDao.class);
         registerDaoClass(FileMappingDao.class);
         registerDaoClass(KNMappingDao.class);
+        registerDaoClass(PlayInfoDao.class);
         registerDaoClass(ScreenDao.class);
         registerDaoClass(ServiceDao.class);
     }

@@ -21,7 +21,10 @@ import java.util.UUID;
 import cn.com.smartadscreen.locallog.SmartLocalLog;
 import cn.com.smartadscreen.locallog.entity.LogMsg;
 import cn.com.smartadscreen.model.bean.DownloadTask;
+import cn.com.smartadscreen.model.bean.OnTimeoutExecute;
+import cn.com.smartadscreen.model.bean.OnVideoPlayer;
 import cn.com.smartadscreen.model.bean.TaskPush;
+import cn.com.smartadscreen.model.bean.event.OnTextPlayer;
 import cn.com.smartadscreen.model.db.entity.BroadcastTable;
 import cn.com.smartadscreen.model.db.manager.BroadcastTableHelper;
 import cn.com.smartadscreen.model.sp.SPManager;
@@ -33,8 +36,6 @@ import cn.com.smartadscreen.utils.TimerUtils;
 /**
  * Created by Taro on 2017/3/15.
  * SmartWebView JsInterface
- *
- * h5需要调用用的方法
  */
 public class SmartJsInterface {
 
@@ -42,12 +43,24 @@ public class SmartJsInterface {
      * JavaScript 模块准备完毕, 请求初始化
      */
     @JavascriptInterface
-    public void requestConnect(){
+    public void requestConnect() {
         // 初始化请求
         Logger.d("SmartJsInterface  HTML请求连接初始化");
         SmartLocalLog.writeLog(new LogMsg(LogMsg.TYPE_RECEIVED, "HTML", "Native", "HTML请求连接初始化"));
         DataSourceUpdateModule.doTaskPush(true);
     }
+
+    /**
+     * JavaScript 记录日志
+     */
+    @JavascriptInterface
+    public void WriteLogByHTML(String key,String value){
+        Logger.d("SmartJsInterface  HTML记录日志");
+        ArrayList remarks = new ArrayList();
+        remarks.add(key+":"+"  "+value);
+        SmartLocalLog.writeLog(new LogMsg(LogMsg.TYPE_HTMLWRITE, "HTML", "Native", "html记录日志",remarks));
+    }
+
 
     /**
      * Javascript 接收到消息推送, 返回消息
@@ -58,7 +71,7 @@ public class SmartJsInterface {
      *            }
      */
     @JavascriptInterface
-    public void dataExecute(String msg){
+    public void dataExecute(String msg) {
         JSONObject msgObject = JSON.parseObject(msg);
         ArrayList<String> remarks = new ArrayList<>();
         remarks.add("sid: " + msgObject.getString("sid"));
@@ -70,7 +83,7 @@ public class SmartJsInterface {
     private Map<String, List<String>> timeoutMap = new HashMap<>();
 
     @JavascriptInterface
-    public String setTimeout(String msg){
+    public String setTimeout(String msg) {
         String timeoutKey = UUID.randomUUID().toString();
         JSONObject timeoutJson = JSON.parseObject(msg);
         String sid = timeoutJson.getString("sid");
@@ -94,16 +107,19 @@ public class SmartJsInterface {
 
     /**
      * 取消定时器
+     *
      * @param sid sid 取消某一个sid对应的所有定时器
      */
     @JavascriptInterface
-    public void clearTimeout(String sid){
+    public void clearTimeout(String sid) {
         if (timeoutMap.containsKey(sid)) {
             List<String> list = timeoutMap.get(sid);
             for (String timeoutKey : list) {
                 TimerUtils.close(timeoutKey);
             }
             timeoutMap.remove(sid);
+            SmartLocalLog.writeLog(new LogMsg(LogMsg.TYPE_RECEIVED, "HTML", "Native", "取消定时器"));
+
         }
     }
 
@@ -124,7 +140,10 @@ public class SmartJsInterface {
                 DownloadManager.addDownloadTask(downloadKey,
                         new DownloadTask(file, filePath, "不存在文件", hash));
                 DownloadManager.startTask(downloadKey, "");
-                SmartLocalLog.writeLog(new LogMsg(LogMsg.TYPE_RECEIVED, "HTML", "Native", "H5验证文件不存在, 执行下载!"));
+                ArrayList<String> remarks = new ArrayList<>();
+                remarks.add("下载路径:" + filePath);
+                remarks.add("Url地址:" + file);
+                SmartLocalLog.writeLog(new LogMsg(LogMsg.TYPE_RECEIVED, "HTML", "Native", "H5验证文件不存在, 执行下载!", remarks));
             }
 
         }
@@ -146,6 +165,13 @@ public class SmartJsInterface {
         onVideoPlayer.setWidth(ConvertUtils.dp2px(dpWidth));
         onVideoPlayer.setHeight(ConvertUtils.dp2px(dpHeight));
 
+        ArrayList<String> remarks = new ArrayList<>();
+        remarks.add("dpX:" + dpX);
+        remarks.add("dpY:" + dpY);
+        remarks.add("dpWidth:" + dpWidth);
+        remarks.add("dpHeight:" + dpHeight);
+        remarks.add("videoInfo:" + videoInfo);
+        SmartLocalLog.writeLog(new LogMsg(LogMsg.TYPE_RECEIVED, "HTML", "Native", "播放视频参数", remarks));
         onVideoPlayer.setCallbackKey(callBackKey);
         EventBus.getDefault().post(onVideoPlayer);
         return callBackKey;
@@ -163,7 +189,7 @@ public class SmartJsInterface {
     public String playText(String textInfo) {
         String callBackKey = UUID.randomUUID().toString();//生成唯一的识别码
         OnTextPlayer onTextPlayer = JSON.parseObject(textInfo, OnTextPlayer.class);
-        Log.i("WebFragment"," playText smartJS "+onTextPlayer.getSize());
+        Log.i("WebFragment", " playText smartJS " + onTextPlayer.getSize());
         int dpX = onTextPlayer.getX();
         int dpY = onTextPlayer.getY();
         int dpWidth = onTextPlayer.getWidth();
@@ -173,6 +199,14 @@ public class SmartJsInterface {
         onTextPlayer.setY(ConvertUtils.dp2px(dpY));
         onTextPlayer.setWidth(ConvertUtils.dp2px(dpWidth));
         onTextPlayer.setHeight(ConvertUtils.dp2px(dpHeight));
+
+        ArrayList<String> remarks = new ArrayList<>();
+        remarks.add("dpX:" + dpX);
+        remarks.add("dpY:" + dpY);
+        remarks.add("dpWidth:" + dpWidth);
+        remarks.add("dpHeight:" + dpHeight);
+        remarks.add("textInfo:" + textInfo);
+        SmartLocalLog.writeLog(new LogMsg(LogMsg.TYPE_RECEIVED, "HTML", "Native", "跑马灯参数", remarks));
 
         onTextPlayer.setCallbackKey(callBackKey);
         EventBus.getDefault().post(onTextPlayer);
@@ -191,14 +225,14 @@ public class SmartJsInterface {
      * 播表过时
      */
     @JavascriptInterface
-    public void tableOutOfData(){
+    public void tableOutOfData() {
         long currentId = SPManager.getManager().getLong(SPManager.KEY_CURRENT_BT_ID, -1L);
         BroadcastTableHelper helper = BroadcastTableHelper.getInstance();
-        if(currentId != -1L) {
+        if (currentId != -1L) {
             helper.deleteById(currentId);
         }
         BroadcastTable nextTable = helper.queryPreBroadcastTableById(helper.queryLastId() + 1);
-        if(nextTable != null) {
+        if (nextTable != null) {
             DataSourceUpdateModule.playBtById(String.valueOf(nextTable.getId()));
         } else {
             SPManager.getInstance().saveCurrentBtId(-1L);

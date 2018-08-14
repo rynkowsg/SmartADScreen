@@ -1,8 +1,6 @@
-package cn.com.startai.smartadh5.processlogic.entity.event;
+package cn.com.smartadscreen.model.bean.event;
 
 import android.view.View;
-
-import com.blankj.utilcode.util.ConvertUtils;
 
 /**
  * Created by Taro on 2017/4/26.

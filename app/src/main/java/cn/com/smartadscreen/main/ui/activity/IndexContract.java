@@ -22,5 +22,7 @@ public interface IndexContract {
         void setCurrentItem(int item);
 
         int getCurrentItem();
+
+
     }
 }

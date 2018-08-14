@@ -1,4 +1,4 @@
-package cn.com.startai.smartadh5.processlogic.entity.event.player;
+package cn.com.smartadscreen.model.bean.event;
 
 /**
  * @author 尹晓童

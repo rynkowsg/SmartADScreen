@@ -82,7 +82,7 @@ public class SmartXJsInterface {
             @Override
             public void run() {
                 TimerUtils.close(timeoutKey);
-                EventBus.getDefault().post(new OnTimeoutExecute(timeoutKey));
+//                EventBus.getDefault().post(new OnTimeoutExecute(timeoutKey));
             }
         }, timeoutJson.getIntValue("delay"));
         return timeoutKey;
@@ -126,61 +126,61 @@ public class SmartXJsInterface {
         return fileExists;
     }
 
-    @JavascriptInterface
-    public String playVideo(String videoInfo) {
-        String callBackKey = UUID.randomUUID().toString();
-        OnVideoPlayer onVideoPlayer = JSON.parseObject(videoInfo, OnVideoPlayer.class);
-
-        int dpX = onVideoPlayer.getX();
-        int dpY = onVideoPlayer.getY();
-        int dpWidth = onVideoPlayer.getWidth();
-        int dpHeight = onVideoPlayer.getHeight();
-
-        onVideoPlayer.setX(ConvertUtils.dp2px(dpX));
-        onVideoPlayer.setY(ConvertUtils.dp2px(dpY));
-        onVideoPlayer.setWidth(ConvertUtils.dp2px(dpWidth));
-        onVideoPlayer.setHeight(ConvertUtils.dp2px(dpHeight));
-
-        onVideoPlayer.setCallbackKey(callBackKey);
-        EventBus.getDefault().post(onVideoPlayer);
-        return callBackKey;
-    }
-
-    @JavascriptInterface
-    public void cancelVideo(String videoId) {
-        OnVideoPlayer cancelVideoPlayer = new OnVideoPlayer();
-        cancelVideoPlayer.setVideoId(videoId);
-        cancelVideoPlayer.setCancelIntent(true);
-        EventBus.getDefault().post(cancelVideoPlayer);
-    }
-
-    @JavascriptInterface
-    public String playText(String textInfo) {
-        String callBackKey = UUID.randomUUID().toString();
-        OnTextPlayer onTextPlayer = JSON.parseObject(textInfo, OnTextPlayer.class);
-        Log.i("WebFragment"," playText smartxJS "+onTextPlayer.getSize());
-        int dpX = onTextPlayer.getX();
-        int dpY = onTextPlayer.getY();
-        int dpWidth = onTextPlayer.getWidth();
-        int dpHeight = onTextPlayer.getHeight();
-
-        onTextPlayer.setX(ConvertUtils.dp2px(dpX));
-        onTextPlayer.setY(ConvertUtils.dp2px(dpY));
-        onTextPlayer.setWidth(ConvertUtils.dp2px(dpWidth));
-        onTextPlayer.setHeight(ConvertUtils.dp2px(dpHeight));
-
-        onTextPlayer.setCallbackKey(callBackKey);
-        EventBus.getDefault().post(onTextPlayer);
-        return callBackKey;
-    }
-
-    @JavascriptInterface
-    public void cancelText(String textId) {
-        OnTextPlayer onTextPlayer = new OnTextPlayer();
-        onTextPlayer.setTextId(textId);
-        onTextPlayer.setCancelIntent(true);
-        EventBus.getDefault().post(onTextPlayer);
-    }
+//    @JavascriptInterface
+//    public String playVideo(String videoInfo) {
+//        String callBackKey = UUID.randomUUID().toString();
+//        OnVideoPlayer onVideoPlayer = JSON.parseObject(videoInfo, OnVideoPlayer.class);
+//
+//        int dpX = onVideoPlayer.getX();
+//        int dpY = onVideoPlayer.getY();
+//        int dpWidth = onVideoPlayer.getWidth();
+//        int dpHeight = onVideoPlayer.getHeight();
+//
+//        onVideoPlayer.setX(ConvertUtils.dp2px(dpX));
+//        onVideoPlayer.setY(ConvertUtils.dp2px(dpY));
+//        onVideoPlayer.setWidth(ConvertUtils.dp2px(dpWidth));
+//        onVideoPlayer.setHeight(ConvertUtils.dp2px(dpHeight));
+//
+//        onVideoPlayer.setCallbackKey(callBackKey);
+//        EventBus.getDefault().post(onVideoPlayer);
+//        return callBackKey;
+//    }
+//
+//    @JavascriptInterface
+//    public void cancelVideo(String videoId) {
+//        OnVideoPlayer cancelVideoPlayer = new OnVideoPlayer();
+//        cancelVideoPlayer.setVideoId(videoId);
+//        cancelVideoPlayer.setCancelIntent(true);
+//        EventBus.getDefault().post(cancelVideoPlayer);
+//    }
+//
+//    @JavascriptInterface
+//    public String playText(String textInfo) {
+//        String callBackKey = UUID.randomUUID().toString();
+//        OnTextPlayer onTextPlayer = JSON.parseObject(textInfo, OnTextPlayer.class);
+//        Log.i("WebFragment"," playText smartxJS "+onTextPlayer.getSize());
+//        int dpX = onTextPlayer.getX();
+//        int dpY = onTextPlayer.getY();
+//        int dpWidth = onTextPlayer.getWidth();
+//        int dpHeight = onTextPlayer.getHeight();
+//
+//        onTextPlayer.setX(ConvertUtils.dp2px(dpX));
+//        onTextPlayer.setY(ConvertUtils.dp2px(dpY));
+//        onTextPlayer.setWidth(ConvertUtils.dp2px(dpWidth));
+//        onTextPlayer.setHeight(ConvertUtils.dp2px(dpHeight));
+//
+//        onTextPlayer.setCallbackKey(callBackKey);
+//        EventBus.getDefault().post(onTextPlayer);
+//        return callBackKey;
+//    }
+//
+//    @JavascriptInterface
+//    public void cancelText(String textId) {
+//        OnTextPlayer onTextPlayer = new OnTextPlayer();
+//        onTextPlayer.setTextId(textId);
+//        onTextPlayer.setCancelIntent(true);
+//        EventBus.getDefault().post(onTextPlayer);
+//    }
 
     /**
      * 播表过时

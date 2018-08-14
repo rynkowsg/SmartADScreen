@@ -1,11 +1,12 @@
-package cn.com.startai.smartadh5.extension.utils;
+package cn.com.smartadscreen.utils;
 
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
-import cn.com.startai.smartadh5.main.application.Application;
+import cn.com.smartadscreen.app.Application;
+
 
 /**
  * 作者：尹晓童

@@ -1,6 +1,7 @@
-package cn.com.startai.smartadh5.extension.utils;
+package cn.com.smartadscreen.utils;
 
-import cn.com.startai.smartadh5.main.application.Application;
+
+import cn.com.smartadscreen.app.Application;
 
 /**
  * Created by Taro on 2017/4/17.

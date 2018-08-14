@@ -1,6 +1,7 @@
-package cn.com.startai.smartadh5.processlogic.entity.bean.player;
+package cn.com.smartadscreen.model.bean;
 
-import cn.com.startai.smartadh5.extension.utils.JSONUtils;
+
+import cn.com.smartadscreen.utils.JSONUtils;
 
 /**
  * @author 尹晓童

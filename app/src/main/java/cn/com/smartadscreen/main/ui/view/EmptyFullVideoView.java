@@ -1,4 +1,4 @@
-package cn.com.startai.smartadh5.main.view;
+package cn.com.smartadscreen.main.ui.view;
 
 import android.content.Context;
 import android.util.AttributeSet;

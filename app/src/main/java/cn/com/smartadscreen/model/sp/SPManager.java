@@ -5,6 +5,8 @@ import android.os.Environment;
 
 import com.blankj.utilcode.util.SPUtils;
 
+import cn.com.smartadscreen.model.db.entity.PlayInfo;
+
 
 /**
  * Created by Taro on 2017/3/15.
@@ -266,9 +268,11 @@ public class SPManager {
         utils.put(KEY_CURRENT_PLAYER_MODE, playMode);
     }
 
-//    public synchronized int getCurrentPlayerMode() {
-////        return utils.getInt(KEY_CURRENT_PLAYER_MODE, PlayInfo.TYPE_CLOCK);
-//    }
+
+
+    public synchronized int getCurrentPlayerMode() {
+        return utils.getInt(KEY_CURRENT_PLAYER_MODE, PlayInfo.TYPE_CLOCK);
+    }
 
     /**
      * 保存当前循环模式
@@ -277,9 +281,7 @@ public class SPManager {
         utils.put(KEY_CURRENT_LOOP_MODE, playMode);
     }
 
-//    public synchronized int getCurrentLoopMode() {
-////        return utils.getInt(KEY_CURRENT_LOOP_MODE, PlayInfo.TYPE_VIDEO);
-//    }
+
 
     /**
      * 保存当前视频播放id

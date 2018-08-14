@@ -1,13 +1,14 @@
-package cn.com.startai.smartadh5.extension.utils;
+package cn.com.smartadscreen.utils;
 
 import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
-import cn.com.startai.smartadh5.db.db.entity.PlayInfo;
-import cn.com.startai.smartadh5.main.application.Application;
-import cn.com.startai.smartadh5.processlogic.entity.bean.player.PlayListData;
-import cn.com.startai.smartadh5.processlogic.entity.bean.player.PlayStateChangeBean;
+import cn.com.smartadscreen.app.Application;
+import cn.com.smartadscreen.model.bean.PlayStateChangeBean;
+import cn.com.smartadscreen.model.bean.event.PlayListData;
+import cn.com.smartadscreen.model.db.entity.PlayInfo;
+
 import cn.startai.apkcommunicate.CommunicateType;
 import cn.startai.apkcommunicate.StartaiCommunicate;
 

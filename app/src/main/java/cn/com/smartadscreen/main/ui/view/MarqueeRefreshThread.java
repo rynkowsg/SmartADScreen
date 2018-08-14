@@ -1,4 +1,4 @@
-package cn.com.startai.smartadh5.main.view;
+package cn.com.smartadscreen.main.ui.view;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -8,9 +8,11 @@ import android.graphics.Rect;
 import android.text.TextPaint;
 import android.view.SurfaceHolder;
 
+import com.facebook.stetho.common.LogUtil;
+
 import java.util.ArrayList;
 
-import cn.com.startai.smartadh5.extension.utils.LogUtil;
+
 
 /**
  * author: Guoqiang_Sun

@@ -1,4 +1,4 @@
-package cn.com.startai.smartadh5.main.activity;
+package cn.com.smartadscreen.main.ui.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,9 +11,10 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.com.smartadscreen.main.ui.view.SmartToast;
+import cn.com.smartadscreen.model.bean.event.OnCommand;
 import cn.com.startai.smartadh5.R;
-import cn.com.startai.smartadh5.locallog.SmartToast;
-import cn.com.startai.smartadh5.processlogic.entity.event.OnCommand;
+
 import cn.startai.apkcommunicate.CommunicateType;
 
 /**

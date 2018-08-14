@@ -1,4 +1,4 @@
-package cn.com.startai.smartadh5.extension.utils;
+package cn.com.smartadscreen.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;

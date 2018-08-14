@@ -61,30 +61,7 @@ public class ExtranceActivity extends BaseActivity {
         Intent intent = new Intent(this.getApplicationContext(), LoadIntentService.class);
         startService(intent);
 
-//        PermissionUtils.permission(PermissionConstants.STORAGE)
-//                .rationale(new PermissionUtils.OnRationaleListener() {
-//                    @Override
-//                    public void rationale(ShouldRequest shouldRequest) {
-//                        Log.i(TAG,"rationale");
-//                        DialogHelper.showRationaleDialog(shouldRequest);
-//
-//                    }
-//                }).callback(new PermissionUtils.FullCallback() {
-//            @Override
-//            public void onGranted(List<String> permissionsGranted) {
-//
-//                Log.i(TAG,"onGranted");
-//                toCopyAssetsFile();
-//            }
-//
-//            @Override
-//            public void onDenied(List<String> permissionsDeniedForever, List<String> permissionsDenied) {
-//                Log.i(TAG,"onDenied");
-//                if (!permissionsDeniedForever.isEmpty()) {
-//                    DialogHelper.showOpenAppSettingDialog();
-//                }
-//            }
-//        }).request();
+
 
     }
 
@@ -194,7 +171,7 @@ public class ExtranceActivity extends BaseActivity {
         Config.getMainHandler().postDelayed(() -> {
             SPManager.getInstance().saveIsInitSuccess(true);
             // Jump to web
-//            IndexActivity.actionStart(this);
+            IndexActivity.actionStart(this);
             finish();
         }, 2000);
     }

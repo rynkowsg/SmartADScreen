@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.inject.Singleton;
 
+import cn.com.smartadscreen.main.ui.activity.IndexActivity;
 import cn.com.smartadscreen.main.ui.activity.IndexContract;
 import cn.com.smartadscreen.main.ui.base.BaseFragment;
 import cn.com.smartadscreen.main.ui.fragment.WebFragment;
@@ -13,11 +14,11 @@ import dagger.Provides;
 
 @Module
 public class IndexModule {
-    private final IndexContract.View view;
+    private final IndexActivity view;
     private WebFragment mWebFragment;
     private List<BaseFragment> mFragments;
 
-    public IndexModule(IndexContract.View view, WebFragment mWebFragment, List<BaseFragment> mFragments) {
+    public IndexModule(IndexActivity view, WebFragment mWebFragment, List<BaseFragment> mFragments) {
         this.view = view;
         this.mWebFragment = mWebFragment;
         this.mFragments = mFragments;

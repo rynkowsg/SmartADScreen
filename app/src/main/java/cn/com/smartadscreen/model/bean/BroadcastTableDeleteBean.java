@@ -1,4 +1,4 @@
-package cn.com.startai.smartadh5.processlogic.entity.bean;
+package cn.com.smartadscreen.model.bean;
 
 /**
  * 作者：尹晓童

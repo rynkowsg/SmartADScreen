@@ -14,6 +14,7 @@ public class LogMsg implements Serializable {
     public static final String TYPE_SEND = "Send 发送";
     public static final String TYPE_HANDLER = "Handler 自身处理";
     public static final String TYPE_EXCEPTION = "Exception 异常捕捉";
+    public static final String TYPE_HTMLWRITE="HTML记录日志";
 
     // 日志创建时间
     private Date createDate;

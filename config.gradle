@@ -17,11 +17,11 @@ ext {
         compileSdkVersion = 26,
 //        buildToolsVersion = '25.0.2',
         buildToolsVersion = '26.0.2',
-        applicationId = "cn.com.example.smartadscreen",
+        applicationId = "cn.com.startai.smartadh5",
         minSdkVersion = 17,
         targetSdkVersion = 26,
-        versionCode = 2105,
-        versionName = '0.2.105',
+        versionCode = 2107,
+        versionName = '0.2.107',
         debug_log_debug = "true"
     ]
 

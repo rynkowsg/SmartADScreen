@@ -1,4 +1,4 @@
-package cn.com.startai.smartadh5.main.view;
+package cn.com.smartadscreen.main.ui.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -11,8 +11,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextClock;
 
 import butterknife.ButterKnife;
+import cn.com.smartadscreen.utils.GlideUtils;
 import cn.com.startai.smartadh5.R;
-import cn.com.startai.smartadh5.extension.utils.GlideUtils;
+
 
 /**
  * 作者：尹晓童

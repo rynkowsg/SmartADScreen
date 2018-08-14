@@ -48,7 +48,7 @@ public class LoadIntentService extends IntentService {
         // 初始化调试工具
         if(BuildConfig.LOG_DEBUG) {
             Stetho.initializeWithDefaults(this.getApplicationContext());
-            Log.i("LoadIntent","666666666");
+
         }
 
         // 初始化异常捕捉日志

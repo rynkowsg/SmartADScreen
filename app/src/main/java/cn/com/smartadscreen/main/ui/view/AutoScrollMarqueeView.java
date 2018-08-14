@@ -1,4 +1,4 @@
-package cn.com.startai.smartadh5.main.view;
+package cn.com.smartadscreen.main.ui.view;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -13,7 +13,7 @@ import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import cn.com.startai.smartadh5.extension.utils.LogUtil;
+import com.facebook.stetho.common.LogUtil;
 
 
 /**

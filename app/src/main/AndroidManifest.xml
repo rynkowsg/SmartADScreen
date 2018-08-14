@@ -37,6 +37,53 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <!-- 主Activity -->
+        <activity
+            android:name="cn.com.smartadscreen.main.ui.activity.IndexActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTop"
+            android:theme="@style/ActivityTheme" />
+
+
+        <service android:name="cn.com.smartadscreen.presenter.service.LoadIntentService" />
+        <service
+            android:name="cn.com.smartadscreen.presenter.service.DataUpdateIntentService"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name="cn.com.smartadscreen.presenter.service.TaskPushIntentService"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name="cn.com.smartadscreen.presenter.service.UniqueDataSourceFileIntentService"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name="cn.com.smartadscreen.presenter.service.ClearDataIntentService"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name="cn.com.smartadscreen.presenter.service.SendNeedReplaceFileIntentService"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name="cn.com.smartadscreen.presenter.service.HotOutIntentService"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name="cn.com.smartadscreen.presenter.service.HotInIntentService"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name="cn.com.smartadscreen.locallog.service.LocalLogIntentService"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name="cn.com.smartadscreen.presenter.service.FileUpdateIntentService"
+            android:enabled="true"
+            android:exported="true" />
+
     </application>
 
 </manifest>

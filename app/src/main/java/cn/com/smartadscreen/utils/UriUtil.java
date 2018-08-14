@@ -1,6 +1,8 @@
-package cn.com.startai.smartadh5.extension.utils;
+package cn.com.smartadscreen.utils;
 
 import android.net.Uri;
+
+import com.facebook.stetho.common.LogUtil;
 
 /**
  * Created by chufeng on 2018/4/19.
