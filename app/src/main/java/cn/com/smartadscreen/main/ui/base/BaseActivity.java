@@ -31,7 +31,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         // 调起APP设置界面
-//        SetupActivity.actionStart(this);
+//        SetupPresenter.actionStart(this);
     }
 
 //    @Override

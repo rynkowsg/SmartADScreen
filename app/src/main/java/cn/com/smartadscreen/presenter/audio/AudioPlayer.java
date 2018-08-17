@@ -1,13 +1,10 @@
 package cn.com.smartadscreen.presenter.audio;
 
-import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
-import android.net.Uri;
 
 import cn.com.smartadscreen.app.Application;
-import cn.com.smartadscreen.model.bean.config.Config;
-import cn.com.startai.smartadh5.R;
+
 
 /**
  * Created by Taro on 2017/1/22.
@@ -33,8 +30,8 @@ public class AudioPlayer {
             }
 
             mediaPlayer = new MediaPlayer();
-            mediaPlayer.reset();
-            AssetFileDescriptor fileDescriptor = Config.getContext().getAssets().openFd("alarm.mp3");
+//            mediaPlayer.setVolume(0.5f,0.5f);
+            AssetFileDescriptor fileDescriptor = Application.getContext().getAssets().openFd("alarm.mp3");
             mediaPlayer.setDataSource(fileDescriptor.getFileDescriptor(),fileDescriptor.getStartOffset(),fileDescriptor.getStartOffset());
             mediaPlayer.setOnPreparedListener( mp -> {
                     mp.start();

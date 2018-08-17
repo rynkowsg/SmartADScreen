@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/settingsBackground"
+    android:fillViewport="false"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="cn.com.smartadscreen.main.ui.activity.SetupActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            style="@style/SetupItemStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/SetupTextViewStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="当前版本" />
+
+            <TextView
+                android:id="@+id/app_version"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="right"
+                android:text="0.2.027"
+                android:textColor="@android:color/darker_gray" />
+
+        </LinearLayout>
+
+        <View style="@style/HorizontalLine" />
+
+        <LinearLayout
+            android:id="@+id/enabled_hardware_key"
+            style="@style/SetupItemStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/SetupTextViewStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="启用实体按键" />
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/enabled_hardware_key_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+        <View style="@style/HorizontalLine" />
+
+        <LinearLayout
+            android:id="@+id/enabled_toast_download_info"
+            style="@style/SetupItemStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/SetupTextViewStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="启用下载进度显示" />
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/enabled_toast_download_info_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <View style="@style/HorizontalLine" />
+
+        <LinearLayout
+            android:id="@+id/app_use_crosswalk"
+            style="@style/SetupItemStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                style="@style/SetupTextViewStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="启用 CrossWalk(需重启)" />
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/app_use_crosswalk_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <View
+            style="@style/HorizontalLine"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/enabled_touch_event"
+            style="@style/SetupItemStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/SetupTextViewStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="允许界面触摸" />
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/enabled_touch_event_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <View style="@style/HorizontalLine" />
+
+        <LinearLayout
+            android:id="@+id/ll_other_setting"
+            style="@style/SetupItemStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/SetupTextViewStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="其他设置" />
+
+            <Button
+                android:id="@+id/btn_jump_to_other_settings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/selector_setup_btn"
+                android:gravity="center"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:padding="5dp"
+                android:text="点击查看"
+                android:textAllCaps="false"
+                android:textColor="@android:color/darker_gray" />
+
+        </LinearLayout>
+
+        <View style="@style/HorizontalLine" />
+
+        <LinearLayout
+            android:id="@+id/ll_download"
+            style="@style/SetupItemStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/SetupTextViewStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="下载列表" />
+
+            <Button
+                android:id="@+id/btn_check_download"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/selector_setup_btn"
+                android:gravity="center"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:padding="5dp"
+                android:text="点击查看"
+                android:textAllCaps="false"
+                android:textColor="@android:color/darker_gray" />
+
+        </LinearLayout>
+
+        <View style="@style/HorizontalLine" />
+
+        <LinearLayout
+            android:id="@+id/ll_device_info"
+            style="@style/SetupItemStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/SetupTextViewStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="设备信息" />
+
+            <Button
+                android:id="@+id/btn_device_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/selector_setup_btn"
+                android:gravity="center"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:padding="5dp"
+                android:text="点击查看"
+                android:textAllCaps="false"
+                android:textColor="@android:color/darker_gray" />
+
+        </LinearLayout>
+
+
+
+
+        <Button
+            android:id="@+id/jump_to_desktop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/selector_setup_btn"
+            android:clickable="true"
+            android:text="跳转至桌面"
+            android:textColor="#FFF" />
+
+        <Button
+            android:id="@+id/jump_to_setup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/selector_setup_btn"
+            android:clickable="true"
+            android:text="跳转至设置页面"
+            android:textColor="#FFF" />
+
+        <Button
+            android:id="@+id/jump_to_nmc_setup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/selector_setup_btn"
+            android:clickable="true"
+            android:text="跳转到 NMC 设置页面"
+            android:textColor="#FFF" />
+
+    </LinearLayout>
+
+
+</ScrollView>

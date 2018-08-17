@@ -38,6 +38,7 @@ import cn.com.smartadscreen.locallog.entity.LogMsg;
 import cn.com.smartadscreen.main.ui.adapter.ViewPagerAdapter;
 import cn.com.smartadscreen.main.ui.base.BaseActivityV1;
 import cn.com.smartadscreen.main.ui.base.BaseFragment;
+import cn.com.smartadscreen.main.ui.contract.IndexContract;
 import cn.com.smartadscreen.main.ui.fragment.DefaultFragment;
 import cn.com.smartadscreen.main.ui.fragment.WebFragment;
 import cn.com.smartadscreen.main.ui.pager.VerticalViewPager;
@@ -102,9 +103,7 @@ public class IndexActivity extends BaseActivityV1 implements XWalkInitializer.XW
 
     @Override
     public void initData() {
-
-
-        Logger.i("执行oncreate");
+        Logger.d("index"+"oncreate");
         if (Config.screenOff) {
             isBtStop = true;
         }
@@ -156,13 +155,13 @@ public class IndexActivity extends BaseActivityV1 implements XWalkInitializer.XW
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                LogUtil.v("indexActivity", "position = " + position);
+
 
             }
 
             @Override
             public void onPageSelected(int position) {
-                Log.i("indexActivity", "position=" + position);
+
 
             }
 
@@ -189,14 +188,14 @@ public class IndexActivity extends BaseActivityV1 implements XWalkInitializer.XW
     @Override
     protected void onResume() {
         super.onResume();
-        Logger.i("执行onResume");
+        Logger.d("index"+"onResume");
         PluginServer.sendServerPause(false);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Logger.i("执行onPause");
+        Logger.d("index"+"onPause");
         PluginServer.sendServerPause(true);
     }
 
@@ -488,9 +487,12 @@ public class IndexActivity extends BaseActivityV1 implements XWalkInitializer.XW
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Logger.d("index"+"onDestroy");
         EventBus.getDefault().unregister(this);
         indexPresenter.unRegister();
         //检测泄露
         Application.getContext().mRefWatcher.watch(this);
     }
+
+
 }

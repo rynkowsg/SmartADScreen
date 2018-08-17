@@ -10,6 +10,7 @@ import com.alibaba.fastjson.JSONObject;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import cn.com.smartadscreen.main.ui.activity.SetupActivity;
 import cn.com.smartadscreen.utils.DeviceInfoUtils;
 
 import cn.startai.apkcommunicate.CommunicateType;
@@ -64,7 +65,7 @@ public abstract class BaseActivityV1 extends AppCompatActivity implements IActiv
     public void onBackPressed() {
         // 调起APP设置界面
         if(shouldInterceptBack()) {
-//            SetupActivity.actionStart(this);
+            SetupActivity.actionStart(this);
         } else {
             super.onBackPressed();
         }

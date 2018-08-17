@@ -5,7 +5,6 @@ import java.util.List;
 import javax.inject.Singleton;
 
 import cn.com.smartadscreen.main.ui.activity.IndexActivity;
-import cn.com.smartadscreen.main.ui.activity.IndexContract;
 import cn.com.smartadscreen.main.ui.base.BaseFragment;
 import cn.com.smartadscreen.main.ui.fragment.WebFragment;
 import cn.com.smartadscreen.presenter.main.IndexPresenter;

@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/settingsBackground">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
+
+
+        <TextView
+            android:id="@+id/tv_play_name"
+            style="@style/SetupTextViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_device_info"
+            style="@style/SetupTextViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <TextClock
+            android:id="@+id/tc_time"
+            style="@style/SetupTextViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            style="@style/SetupTextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:gravity="center"
+            android:text="日常定时开关屏安排" />
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+
+            <TableRow>
+
+                <TextView
+                    style="@style/PlanTableTextViewStyle"
+                    android:text="星期一" />
+
+                <TextView
+                    style="@style/PlanTableTextViewStyle"
+                    android:text="星期二" />
+
+                <TextView
+                    style="@style/PlanTableTextViewStyle"
+                    android:text="星期三" />
+
+                <TextView
+                    style="@style/PlanTableTextViewStyle"
+                    android:text="星期四" />
+
+                <TextView
+                    style="@style/PlanTableTextViewStyle"
+                    android:text="星期五" />
+
+                <TextView
+                    style="@style/PlanTableTextViewStyle"
+                    android:text="星期六" />
+
+                <TextView
+                    style="@style/PlanTableTextViewStyle"
+                    android:text="星期日" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    style="@style/PlanTableTextViewStyle"
+                    android:text="开屏时间~关屏时间" />
+
+                <TextView
+                    style="@style/PlanTableTextViewStyle"
+                    android:text="开屏时间~关屏时间" />
+
+                <TextView
+                    style="@style/PlanTableTextViewStyle"
+                    android:text="开屏时间~关屏时间" />
+
+                <TextView
+                    style="@style/PlanTableTextViewStyle"
+                    android:text="开屏时间~关屏时间" />
+
+                <TextView
+                    style="@style/PlanTableTextViewStyle"
+                    android:text="开屏时间~关屏时间" />
+
+                <TextView
+                    style="@style/PlanTableTextViewStyle"
+                    android:text="开屏时间~关屏时间" />
+
+                <TextView
+                    style="@style/PlanTableTextViewStyle"
+                    android:text="开屏时间~关屏时间" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:id="@+id/tv_screen_time_mon"
+                    style="@style/PlanTableTextViewStyle" />
+
+                <TextView
+                    android:id="@+id/tv_screen_time_tue"
+                    style="@style/PlanTableTextViewStyle" />
+
+                <TextView
+                    android:id="@+id/tv_screen_time_wed"
+                    style="@style/PlanTableTextViewStyle" />
+
+                <TextView
+                    android:id="@+id/tv_screen_time_thu"
+                    style="@style/PlanTableTextViewStyle" />
+
+                <TextView
+                    android:id="@+id/tv_screen_time_fir"
+                    style="@style/PlanTableTextViewStyle" />
+
+                <TextView
+                    android:id="@+id/tv_screen_time_sat"
+                    style="@style/PlanTableTextViewStyle" />
+
+                <TextView
+                    android:id="@+id/tv_screen_time_sun"
+                    style="@style/PlanTableTextViewStyle" />
+
+            </TableRow>
+        </TableLayout>
+
+        <TextView
+            style="@style/SetupTextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:gravity="center"
+            android:text="日常定时开关机安排" />
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+
+            <TableRow>
+
+                <TextView
+                    style="@style/PlanTableTextViewStyle"
+                    android:text="星期一" />
+
+                <TextView
+                    style="@style/PlanTableTextViewStyle"
+                    android:text="星期二" />
+
+                <TextView
+                    style="@style/PlanTableTextViewStyle"
+                    android:text="星期三" />
+
+                <TextView
+                    style="@style/PlanTableTextViewStyle"
+                    android:text="星期四" />
+
+                <TextView
+                    style="@style/PlanTableTextViewStyle"
+                    android:text="星期五" />
+
+                <TextView
+                    style="@style/PlanTableTextViewStyle"
+                    android:text="星期六" />
+
+                <TextView
+                    style="@style/PlanTableTextViewStyle"
+                    android:text="星期日" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    style="@style/PlanTableTextViewStyle"
+                    android:text="开机时间~关机时间" />
+
+                <TextView
+                    style="@style/PlanTableTextViewStyle"
+                    android:text="开机时间~关机时间" />
+
+                <TextView
+                    style="@style/PlanTableTextViewStyle"
+                    android:text="开机时间~关机时间" />
+
+                <TextView
+                    style="@style/PlanTableTextViewStyle"
+                    android:text="开机时间~关机时间" />
+
+                <TextView
+                    style="@style/PlanTableTextViewStyle"
+                    android:text="开机时间~关机时间" />
+
+                <TextView
+                    style="@style/PlanTableTextViewStyle"
+                    android:text="开机时间~关机时间" />
+
+                <TextView
+                    style="@style/PlanTableTextViewStyle"
+                    android:text="开机时间~关机时间" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:id="@+id/tv_device_on_off_time_mon"
+                    style="@style/PlanTableTextViewStyle" />
+
+                <TextView
+                    android:id="@+id/tv_device_on_off_time_tue"
+                    style="@style/PlanTableTextViewStyle" />
+
+                <TextView
+                    android:id="@+id/tv_device_on_off_time_wed"
+                    style="@style/PlanTableTextViewStyle" />
+
+                <TextView
+                    android:id="@+id/tv_device_on_off_time_thu"
+                    style="@style/PlanTableTextViewStyle" />
+
+                <TextView
+                    android:id="@+id/tv_device_on_off_time_fir"
+                    style="@style/PlanTableTextViewStyle" />
+
+                <TextView
+                    android:id="@+id/tv_device_on_off_time_sat"
+                    style="@style/PlanTableTextViewStyle" />
+
+                <TextView
+                    android:id="@+id/tv_device_on_off_time_sun"
+                    style="@style/PlanTableTextViewStyle" />
+
+            </TableRow>
+        </TableLayout>
+
+    </LinearLayout>
+</ScrollView>

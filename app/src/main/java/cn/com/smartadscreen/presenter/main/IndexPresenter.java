@@ -3,9 +3,6 @@ package cn.com.smartadscreen.presenter.main;
 import android.graphics.Bitmap;
 import android.os.Handler;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -15,7 +12,6 @@ import com.blankj.utilcode.util.TimeUtils;
 import com.facebook.stetho.common.LogUtil;
 import com.orhanobut.logger.Logger;
 
-import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -25,35 +21,29 @@ import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Random;
 import java.util.TimerTask;
 
 import cn.com.smartadscreen.locallog.SmartLocalLog;
 import cn.com.smartadscreen.locallog.entity.LogMsg;
 import cn.com.smartadscreen.main.ui.activity.IndexActivity;
-import cn.com.smartadscreen.main.ui.activity.IndexContract;
+import cn.com.smartadscreen.main.ui.contract.IndexContract;
 import cn.com.smartadscreen.main.ui.base.BaseFragment;
 import cn.com.smartadscreen.main.ui.fragment.WebFragment;
-import cn.com.smartadscreen.main.ui.view.EmptyFullVideoView;
 import cn.com.smartadscreen.model.bean.OnVideoPlayer;
 import cn.com.smartadscreen.model.bean.StatusBarBean;
 import cn.com.smartadscreen.model.bean.TaskPush;
 import cn.com.smartadscreen.model.bean.config.Config;
 import cn.com.smartadscreen.model.bean.event.OnScreenshot;
 
-import cn.com.smartadscreen.model.bean.event.OnTextPlayer;
 import cn.com.smartadscreen.model.sp.SPManager;
 import cn.com.smartadscreen.presenter.task.HourSyncTask;
 import cn.com.smartadscreen.presenter.task.StateDate;
 import cn.com.smartadscreen.presenter.update.DataSourceUpdateModule;
 import cn.com.smartadscreen.utils.SmartTimerService;
 import cn.com.smartadscreen.utils.TimerUtils;
-import cn.com.smartadscreen.utils.UriUtil;
-import cn.com.startai.smartadh5.R;
 import cn.startai.apkcommunicate.CommunicateType;
 import cn.startai.apkcommunicate.StartaiCommunicate;
 

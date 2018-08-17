@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import cn.com.smartadscreen.locallog.SmartLocalLog;
 import cn.com.smartadscreen.locallog.entity.LogMsg;
 import cn.com.smartadscreen.main.ui.activity.IndexActivity;
-import cn.com.smartadscreen.main.ui.activity.IndexContract;
 import cn.com.smartadscreen.model.bean.config.Config;
 import cn.com.smartadscreen.model.db.manager.ScreenHelper;
 import cn.com.smartadscreen.presenter.update.DataSourceUpdateModule;

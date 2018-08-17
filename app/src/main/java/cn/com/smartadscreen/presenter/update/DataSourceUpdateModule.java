@@ -38,7 +38,6 @@ import cn.com.smartadscreen.model.db.manager.DBManager;
 import cn.com.smartadscreen.model.db.manager.ServiceHelper;
 import cn.com.smartadscreen.model.sp.SPManager;
 import cn.com.smartadscreen.presenter.audio.AudioPlayer;
-import cn.com.smartadscreen.presenter.audio.IjkMusicPlayer;
 import cn.com.smartadscreen.presenter.manager.DownloadManager;
 import cn.com.smartadscreen.presenter.service.ClearDataIntentService;
 import cn.com.smartadscreen.presenter.service.DataUpdateIntentService;
@@ -49,6 +48,8 @@ import cn.com.smartadscreen.presenter.service.TaskPushIntentService;
 import cn.com.smartadscreen.presenter.service.UniqueDataSourceFileIntentService;
 import cn.com.smartadscreen.utils.JSONUtils;
 import cn.com.smartadscreen.utils.SmartToast;
+
+
 
 
 /**

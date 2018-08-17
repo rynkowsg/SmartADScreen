@@ -45,6 +45,12 @@
             android:launchMode="singleTop"
             android:theme="@style/ActivityTheme" />
 
+        <!-- APP 设置 Activity -->
+        <activity
+            android:name="cn.com.smartadscreen.main.ui.activity.SetupActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/ActivityTheme" />
+
 
         <service android:name="cn.com.smartadscreen.presenter.service.LoadIntentService" />
         <service
@@ -83,6 +89,16 @@
             android:name="cn.com.smartadscreen.presenter.service.FileUpdateIntentService"
             android:enabled="true"
             android:exported="true" />
+
+        <receiver
+            android:name="cn.com.smartadscreen.presenter.broadcast.AnrReceiver"
+            android:enabled="true">
+            <intent-filter android:priority="1000">
+                <!--anr-->
+                <action android:name="android.intent.action.ANR" />
+            </intent-filter>
+
+        </receiver>
 
     </application>
 

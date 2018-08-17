@@ -1,4 +1,4 @@
-package cn.com.smartadscreen.main.ui.activity;
+package cn.com.smartadscreen.main.ui.contract;
 
 import com.alibaba.fastjson.JSONObject;
 
