@@ -26,18 +26,19 @@ public class BroadcastTableDao extends AbstractDao<BroadcastTable, Long> {
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property BtId = new Property(1, String.class, "btId", false, "BT_ID");
-        public final static Property Name = new Property(2, String.class, "name", false, "NAME");
-        public final static Property Resolution = new Property(3, String.class, "resolution", false, "RESOLUTION");
-        public final static Property AppType = new Property(4, String.class, "appType", false, "APP_TYPE");
-        public final static Property Finished = new Property(5, boolean.class, "finished", false, "FINISHED");
-        public final static Property DownloadKey = new Property(6, String.class, "downloadKey", false, "DOWNLOAD_KEY");
-        public final static Property Content = new Property(7, String.class, "content", false, "CONTENT");
-        public final static Property Logo = new Property(8, String.class, "logo", false, "LOGO");
-        public final static Property ComeFrom = new Property(9, String.class, "comeFrom", false, "COME_FROM");
-        public final static Property CreateDate = new Property(10, java.util.Date.class, "createDate", false, "CREATE_DATE");
-        public final static Property ModifyDate = new Property(11, java.util.Date.class, "modifyDate", false, "MODIFY_DATE");
-        public final static Property TimeType = new Property(12, String.class, "timeType", false, "TIME_TYPE");
-        public final static Property IsNeedDelay = new Property(13, Boolean.class, "isNeedDelay", false, "IS_NEED_DELAY");
+        public final static Property Bg = new Property(2, String.class, "bg", false, "BG");
+        public final static Property Name = new Property(3, String.class, "name", false, "NAME");
+        public final static Property Resolution = new Property(4, String.class, "resolution", false, "RESOLUTION");
+        public final static Property AppType = new Property(5, String.class, "appType", false, "APP_TYPE");
+        public final static Property Finished = new Property(6, boolean.class, "finished", false, "FINISHED");
+        public final static Property DownloadKey = new Property(7, String.class, "downloadKey", false, "DOWNLOAD_KEY");
+        public final static Property Content = new Property(8, String.class, "content", false, "CONTENT");
+        public final static Property Logo = new Property(9, String.class, "logo", false, "LOGO");
+        public final static Property ComeFrom = new Property(10, String.class, "comeFrom", false, "COME_FROM");
+        public final static Property CreateDate = new Property(11, java.util.Date.class, "createDate", false, "CREATE_DATE");
+        public final static Property ModifyDate = new Property(12, java.util.Date.class, "modifyDate", false, "MODIFY_DATE");
+        public final static Property TimeType = new Property(13, String.class, "timeType", false, "TIME_TYPE");
+        public final static Property IsNeedDelay = new Property(14, Boolean.class, "isNeedDelay", false, "IS_NEED_DELAY");
     }
 
     private DaoSession daoSession;
@@ -58,18 +59,19 @@ public class BroadcastTableDao extends AbstractDao<BroadcastTable, Long> {
         db.execSQL("CREATE TABLE " + constraint + "\"BROADCAST_TABLE\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "\"BT_ID\" TEXT," + // 1: btId
-                "\"NAME\" TEXT," + // 2: name
-                "\"RESOLUTION\" TEXT," + // 3: resolution
-                "\"APP_TYPE\" TEXT," + // 4: appType
-                "\"FINISHED\" INTEGER NOT NULL ," + // 5: finished
-                "\"DOWNLOAD_KEY\" TEXT," + // 6: downloadKey
-                "\"CONTENT\" TEXT," + // 7: content
-                "\"LOGO\" TEXT," + // 8: logo
-                "\"COME_FROM\" TEXT," + // 9: comeFrom
-                "\"CREATE_DATE\" INTEGER," + // 10: createDate
-                "\"MODIFY_DATE\" INTEGER," + // 11: modifyDate
-                "\"TIME_TYPE\" TEXT," + // 12: timeType
-                "\"IS_NEED_DELAY\" INTEGER);"); // 13: isNeedDelay
+                "\"BG\" TEXT," + // 2: bg
+                "\"NAME\" TEXT," + // 3: name
+                "\"RESOLUTION\" TEXT," + // 4: resolution
+                "\"APP_TYPE\" TEXT," + // 5: appType
+                "\"FINISHED\" INTEGER NOT NULL ," + // 6: finished
+                "\"DOWNLOAD_KEY\" TEXT," + // 7: downloadKey
+                "\"CONTENT\" TEXT," + // 8: content
+                "\"LOGO\" TEXT," + // 9: logo
+                "\"COME_FROM\" TEXT," + // 10: comeFrom
+                "\"CREATE_DATE\" INTEGER," + // 11: createDate
+                "\"MODIFY_DATE\" INTEGER," + // 12: modifyDate
+                "\"TIME_TYPE\" TEXT," + // 13: timeType
+                "\"IS_NEED_DELAY\" INTEGER);"); // 14: isNeedDelay
     }
 
     /** Drops the underlying database table. */
@@ -92,60 +94,65 @@ public class BroadcastTableDao extends AbstractDao<BroadcastTable, Long> {
             stmt.bindString(2, btId);
         }
  
+        String bg = entity.getBg();
+        if (bg != null) {
+            stmt.bindString(3, bg);
+        }
+ 
         String name = entity.getName();
         if (name != null) {
-            stmt.bindString(3, name);
+            stmt.bindString(4, name);
         }
  
         String resolution = entity.getResolution();
         if (resolution != null) {
-            stmt.bindString(4, resolution);
+            stmt.bindString(5, resolution);
         }
  
         String appType = entity.getAppType();
         if (appType != null) {
-            stmt.bindString(5, appType);
+            stmt.bindString(6, appType);
         }
-        stmt.bindLong(6, entity.getFinished() ? 1L: 0L);
+        stmt.bindLong(7, entity.getFinished() ? 1L: 0L);
  
         String downloadKey = entity.getDownloadKey();
         if (downloadKey != null) {
-            stmt.bindString(7, downloadKey);
+            stmt.bindString(8, downloadKey);
         }
  
         String content = entity.getContent();
         if (content != null) {
-            stmt.bindString(8, content);
+            stmt.bindString(9, content);
         }
  
         String logo = entity.getLogo();
         if (logo != null) {
-            stmt.bindString(9, logo);
+            stmt.bindString(10, logo);
         }
  
         String comeFrom = entity.getComeFrom();
         if (comeFrom != null) {
-            stmt.bindString(10, comeFrom);
+            stmt.bindString(11, comeFrom);
         }
  
         java.util.Date createDate = entity.getCreateDate();
         if (createDate != null) {
-            stmt.bindLong(11, createDate.getTime());
+            stmt.bindLong(12, createDate.getTime());
         }
  
         java.util.Date modifyDate = entity.getModifyDate();
         if (modifyDate != null) {
-            stmt.bindLong(12, modifyDate.getTime());
+            stmt.bindLong(13, modifyDate.getTime());
         }
  
         String timeType = entity.getTimeType();
         if (timeType != null) {
-            stmt.bindString(13, timeType);
+            stmt.bindString(14, timeType);
         }
  
         Boolean isNeedDelay = entity.getIsNeedDelay();
         if (isNeedDelay != null) {
-            stmt.bindLong(14, isNeedDelay ? 1L: 0L);
+            stmt.bindLong(15, isNeedDelay ? 1L: 0L);
         }
     }
 
@@ -163,60 +170,65 @@ public class BroadcastTableDao extends AbstractDao<BroadcastTable, Long> {
             stmt.bindString(2, btId);
         }
  
+        String bg = entity.getBg();
+        if (bg != null) {
+            stmt.bindString(3, bg);
+        }
+ 
         String name = entity.getName();
         if (name != null) {
-            stmt.bindString(3, name);
+            stmt.bindString(4, name);
         }
  
         String resolution = entity.getResolution();
         if (resolution != null) {
-            stmt.bindString(4, resolution);
+            stmt.bindString(5, resolution);
         }
  
         String appType = entity.getAppType();
         if (appType != null) {
-            stmt.bindString(5, appType);
+            stmt.bindString(6, appType);
         }
-        stmt.bindLong(6, entity.getFinished() ? 1L: 0L);
+        stmt.bindLong(7, entity.getFinished() ? 1L: 0L);
  
         String downloadKey = entity.getDownloadKey();
         if (downloadKey != null) {
-            stmt.bindString(7, downloadKey);
+            stmt.bindString(8, downloadKey);
         }
  
         String content = entity.getContent();
         if (content != null) {
-            stmt.bindString(8, content);
+            stmt.bindString(9, content);
         }
  
         String logo = entity.getLogo();
         if (logo != null) {
-            stmt.bindString(9, logo);
+            stmt.bindString(10, logo);
         }
  
         String comeFrom = entity.getComeFrom();
         if (comeFrom != null) {
-            stmt.bindString(10, comeFrom);
+            stmt.bindString(11, comeFrom);
         }
  
         java.util.Date createDate = entity.getCreateDate();
         if (createDate != null) {
-            stmt.bindLong(11, createDate.getTime());
+            stmt.bindLong(12, createDate.getTime());
         }
  
         java.util.Date modifyDate = entity.getModifyDate();
         if (modifyDate != null) {
-            stmt.bindLong(12, modifyDate.getTime());
+            stmt.bindLong(13, modifyDate.getTime());
         }
  
         String timeType = entity.getTimeType();
         if (timeType != null) {
-            stmt.bindString(13, timeType);
+            stmt.bindString(14, timeType);
         }
  
         Boolean isNeedDelay = entity.getIsNeedDelay();
         if (isNeedDelay != null) {
-            stmt.bindLong(14, isNeedDelay ? 1L: 0L);
+            stmt.bindLong(15, isNeedDelay ? 1L: 0L);
         }
     }
 
@@ -236,18 +248,19 @@ public class BroadcastTableDao extends AbstractDao<BroadcastTable, Long> {
         BroadcastTable entity = new BroadcastTable( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // btId
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // name
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // resolution
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // appType
-            cursor.getShort(offset + 5) != 0, // finished
-            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // downloadKey
-            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // content
-            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // logo
-            cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // comeFrom
-            cursor.isNull(offset + 10) ? null : new java.util.Date(cursor.getLong(offset + 10)), // createDate
-            cursor.isNull(offset + 11) ? null : new java.util.Date(cursor.getLong(offset + 11)), // modifyDate
-            cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12), // timeType
-            cursor.isNull(offset + 13) ? null : cursor.getShort(offset + 13) != 0 // isNeedDelay
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // bg
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // name
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // resolution
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // appType
+            cursor.getShort(offset + 6) != 0, // finished
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // downloadKey
+            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // content
+            cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // logo
+            cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // comeFrom
+            cursor.isNull(offset + 11) ? null : new java.util.Date(cursor.getLong(offset + 11)), // createDate
+            cursor.isNull(offset + 12) ? null : new java.util.Date(cursor.getLong(offset + 12)), // modifyDate
+            cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13), // timeType
+            cursor.isNull(offset + 14) ? null : cursor.getShort(offset + 14) != 0 // isNeedDelay
         );
         return entity;
     }
@@ -256,18 +269,19 @@ public class BroadcastTableDao extends AbstractDao<BroadcastTable, Long> {
     public void readEntity(Cursor cursor, BroadcastTable entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setBtId(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setName(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setResolution(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setAppType(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setFinished(cursor.getShort(offset + 5) != 0);
-        entity.setDownloadKey(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
-        entity.setContent(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
-        entity.setLogo(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
-        entity.setComeFrom(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
-        entity.setCreateDate(cursor.isNull(offset + 10) ? null : new java.util.Date(cursor.getLong(offset + 10)));
-        entity.setModifyDate(cursor.isNull(offset + 11) ? null : new java.util.Date(cursor.getLong(offset + 11)));
-        entity.setTimeType(cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12));
-        entity.setIsNeedDelay(cursor.isNull(offset + 13) ? null : cursor.getShort(offset + 13) != 0);
+        entity.setBg(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setName(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setResolution(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setAppType(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setFinished(cursor.getShort(offset + 6) != 0);
+        entity.setDownloadKey(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
+        entity.setContent(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
+        entity.setLogo(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
+        entity.setComeFrom(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
+        entity.setCreateDate(cursor.isNull(offset + 11) ? null : new java.util.Date(cursor.getLong(offset + 11)));
+        entity.setModifyDate(cursor.isNull(offset + 12) ? null : new java.util.Date(cursor.getLong(offset + 12)));
+        entity.setTimeType(cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13));
+        entity.setIsNeedDelay(cursor.isNull(offset + 14) ? null : cursor.getShort(offset + 14) != 0);
      }
     
     @Override

@@ -1,6 +1,5 @@
 package cn.com.smartadscreen.presenter.service;
 
-
 import android.app.IntentService;
 import android.content.Intent;
 import android.text.TextUtils;
@@ -28,6 +27,7 @@ import java.util.UUID;
 
 import cn.com.smartadscreen.locallog.SmartLocalLog;
 import cn.com.smartadscreen.locallog.entity.LogMsg;
+import cn.com.smartadscreen.main.ui.view.SmartToast;
 import cn.com.smartadscreen.model.bean.ContentItemBean;
 import cn.com.smartadscreen.model.bean.DownloadTask;
 import cn.com.smartadscreen.model.bean.ReportErrorMsg;
@@ -46,7 +46,6 @@ import cn.com.smartadscreen.presenter.nmc.NmcReport;
 import cn.com.smartadscreen.presenter.update.DataSourceUpdateModule;
 import cn.com.smartadscreen.utils.AppFileUtils;
 import cn.com.smartadscreen.utils.JSONUtils;
-import cn.com.smartadscreen.utils.SmartToast;
 
 
 public class DataUpdateIntentService extends IntentService {
@@ -109,7 +108,7 @@ public class DataUpdateIntentService extends IntentService {
             content.put("msg", "播表解析错误");
             content.put("msgInfo", e.toString());
             errorMsg.setContent(content);
-            EventBus.getDefault().post( errorMsg );
+            EventBus.getDefault().post(errorMsg);
 
             SmartToast.error("播表处理程序发生异常");
             stopSelf(startId);
@@ -133,7 +132,7 @@ public class DataUpdateIntentService extends IntentService {
         msgRoot.put("ts", 0);
 
         JSONObject contentRoot = msgRoot.getJSONObject("content");
-
+        Logger.i("acg原始数据:" + contentRoot.toJSONString());
         Service service = DataSourceUpdateModule.getServiceFromJson(msgRoot);
 
         String id = contentRoot.getString("id");
@@ -142,6 +141,12 @@ public class DataUpdateIntentService extends IntentService {
         String appType = contentRoot.getString("apptype");
         String logo = contentRoot.getString("logo");
         String from = contentRoot.toString().contains("isWechat") ? "wechat" : "startai";
+        //todo new
+        String bg = contentRoot.toJSONString().contains("Bg") ? contentRoot.getString("Bg") : null;
+        JSONObject bgJson = contentRoot.getJSONObject("Bg");
+        Logger.i("name:" + name);
+        Logger.i("bg:"+bg);
+
         // playType: 0 -> 置顶 1 -> 不回放
         Integer playType = contentRoot.getInteger("playType");
         // totalLength 播表总时间
@@ -156,6 +161,7 @@ public class DataUpdateIntentService extends IntentService {
         bt.setAppType(appType);
         bt.setContent(msgRoot.toString());
         bt.setLogo(logo);
+        bt.setBg(bg);
         if (totalLength != null) {
             bt.setComeFrom(from + '-' + totalLength);
         } else {
@@ -170,10 +176,25 @@ public class DataUpdateIntentService extends IntentService {
                 .queryBuilder()
                 .orderDesc(BroadcastTableDao.Properties.Id)
                 .list();
+        //log
+        Logger.i("播表ID：" + bt.getBtId());
 
         if (list.size() > 0 && list.get(0).getBtId().equalsIgnoreCase(bt.getBtId())) {
             // old
             BroadcastTable existBt = list.get(0);
+            ArrayList<String> cous = new ArrayList<>();
+            //log
+            Logger.i("本地数据库的对应json:" + existBt.getContent());
+            Logger.i("Nmc传过来的json：" + bt.getContent());
+            //日志
+            cous.add("本地数据库的对应json:" + existBt.getContent());
+            cous.add("Nmc传过来的json：" + bt.getContent());
+            cous.add("云端传入的content:" + bt.getContent());
+            SmartLocalLog.writeLog(new LogMsg(LogMsg.TYPE_SEND, "Html",
+                    "Native", "播表Json数据比对", cous));
+
+            Logger.i("云端传入的content:" + bt.getContent());
+
             if (existBt.getContent().equalsIgnoreCase(bt.getContent())) {
                 ArrayList<String> remarks = new ArrayList<>();
                 remarks.add("播表Id:" + bt.getBtId());
@@ -181,10 +202,15 @@ public class DataUpdateIntentService extends IntentService {
                 SmartLocalLog.writeLog(new LogMsg(LogMsg.TYPE_HANDLER, "Native", "Native",
                         "播表检测, 播表重复, 不做处理", remarks));
                 SmartToast.wraning("播表检测, 播表重复, 不做处理");
+                //log
+                Logger.i("播表检测, 播表重复, 不做处理");
+                Logger.i("本地数据库的对应json:" + existBt.getContent());
+                Logger.i("Nmc传过来的json：" + bt.getContent());
 
                 //播表重复，通知云端当前播表完成，或者正在下载
                 ReportMsg reportMsg = new ReportMsg();
                 JSONObject content = new JSONObject();
+                int i = 2;
 
                 if (existBt.getFinished()) {
                     reportMsg.setResult(1);
@@ -220,6 +246,13 @@ public class DataUpdateIntentService extends IntentService {
                 downloadKey = existBt.getDownloadKey();
                 service.setDownloadKey(downloadKey);
                 ServiceHelper.getInstance().insertOrRelease(service);
+
+                //todo 比较背景图片是否一致
+                String exBg = existBt.getBg();
+                if (exBg != null && bg != null && !exBg.equals(bg)) {
+
+                    handleBg(bgJson,existBt);
+                }
 
                 handleScreens(existBt, screens);
 
@@ -260,16 +293,25 @@ public class DataUpdateIntentService extends IntentService {
 
             mBroadcastTableHelper.insert(bt);
             saveStickBt(playType, bt.getId());
-
+            //todo 比较背景图片是否一致
+            if (bg != null) {
+                handleBg(bgJson,bt);
+            }
             handleScreens(bt, screens);
 
             Logger.i("解析完毕,本地文件检查结果\n" + checkLocalFileRemarks.toString());
             SmartLocalLog.writeLog(new LogMsg(LogMsg.TYPE_HANDLER, "Native", "Native", "本地文件检查", checkLocalFileRemarks));
 
-            Logger.i("发送下载任务");
+            Logger.i("发送下载任务:");
             DownloadManager.startTask(downloadKey, DataSourceUpdateModule.TAG);
 
         }
+
+
+        ArrayList<String> remarks = new ArrayList<>();
+        remarks.add("传入的json数据" + msgRoot.toString());
+        SmartLocalLog.writeLog(new LogMsg(LogMsg.TYPE_HANDLER, "Native",
+                "Native", "准备数据文件去重", remarks));
 
         // 数据文件去重
         Logger.i("准备数据文件去重!");
@@ -293,6 +335,81 @@ public class DataUpdateIntentService extends IntentService {
                     break;
             }
         }
+    }
+
+
+    /**
+     * 处理下载背景图片
+     **/
+    private void handleBg(JSONObject bgJsonString,BroadcastTable parentBt) {
+
+
+        ContentItemBean contentBgBean = JSON.parseObject(bgJsonString.toJSONString(), ContentItemBean.class);
+        Logger.i("bgJson", contentBgBean.toString());
+
+        if (contentBgBean.getFile() != null && contentBgBean.getHash() != null) {
+            String file = contentBgBean.getFile();
+            String hash = contentBgBean.getHash();
+            String hash2 = contentBgBean.getHash2();
+            String name = contentBgBean.getName();
+            name = (name == null ? hash : name);
+
+            if (TextUtils.isEmpty(file)) {
+                SmartToast.error("播表格式错误, BG字段中缺少 file 字段!");
+                checkLocalFileRemarks.add("Bg字段中缺少 file 字段,不检查");
+                stopSelf();
+                return;
+            }
+
+            String fileName;
+            if (TextUtils.isEmpty(hash) && !TextUtils.isEmpty(file)) {
+                String urlHash = EncryptUtils.encryptMD5ToString(file).toLowerCase();
+                fileName = hash2 + "-" + urlHash + getExtNameByName("imageplayer", name);
+            } else {
+                fileName = hash + getExtNameByName("imageplayer", name);
+            }
+            String filePath = appDataFolder + fileName;
+
+            // record remark
+            StringBuilder remark = new StringBuilder();
+            remark.append("文件名称: ");
+            remark.append(name);
+            remark.append("\n本地文件路径: ");
+            remark.append(filePath);
+            contentBgBean.setPath(filePath);
+            bgJsonString.put("path",filePath);
+
+            parentBt.setBg(bgJsonString.toJSONString());
+            parentBt.update();
+
+
+
+            if (!checkLocalFile(filePath, hash, hash2)) {
+                remark.append("\n检查结果: 本地背景图片不存在\n");
+
+                DownloadTask downloadTask = null;
+                if (hash.equals("") || hash.length() == 0) {
+                    downloadTask = new DownloadTask(file, filePath, name, hash, hash2);
+                    downloadTask.setItemBean(contentBgBean);
+                } else {
+                    downloadTask = new DownloadTask(file, filePath, name, hash);
+                    downloadTask.setItemBean(contentBgBean);
+                }
+                Logger.i("添加下载路径:" + filePath);
+                DownloadManager.addDownloadTask(downloadKey, downloadTask);
+            } else {
+                remark.append("\n检查结果: 本地存在\n");
+            }
+
+            checkLocalFileRemarks.add(remark.toString());
+
+
+        } else {
+            if (contentBgBean.getPath() == null) {
+                DataSourceUpdateModule.createItemTypeFile(contentBgBean);
+            }
+        }
+
     }
 
     private void handleScreens(BroadcastTable parentBt, JSONArray screens) {

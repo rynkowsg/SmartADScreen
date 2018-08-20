@@ -25,6 +25,8 @@ public class BroadcastTable implements Serializable {
     private Long id;
     // 播表ID
     private String btId;
+    //背景图片
+    private String bg;
     // 播表Name
     private String name;
     // 播表分辨率
@@ -63,6 +65,7 @@ public class BroadcastTable implements Serializable {
         this.modifyDate = bt.getModifyDate();
         this.screens = null;
         this.timeType = bt.getTimeType();
+
         this.isNeedDelay = bt.isNeedDelay();
     }
 
@@ -73,13 +76,13 @@ public class BroadcastTable implements Serializable {
     /** Used for active entity operations. */
     @Generated(hash = 117836208)
     private transient BroadcastTableDao myDao;
-    @Generated(hash = 1699726335)
-    public BroadcastTable(Long id, String btId, String name, String resolution,
-            String appType, boolean finished, String downloadKey, String content,
-            String logo, String comeFrom, Date createDate, Date modifyDate,
+    @Generated(hash = 518788031)
+    public BroadcastTable(Long id, String btId, String bg, String name, String resolution, String appType, boolean finished,
+            String downloadKey, String content, String logo, String comeFrom, Date createDate, Date modifyDate,
             String timeType, Boolean isNeedDelay) {
         this.id = id;
         this.btId = btId;
+        this.bg = bg;
         this.name = name;
         this.resolution = resolution;
         this.appType = appType;
@@ -281,6 +284,8 @@ public class BroadcastTable implements Serializable {
             return false;
         if (getIsNeedDelay() != null ? !getIsNeedDelay().equals(table.getIsNeedDelay()) : table.getIsNeedDelay() != null)
             return false;
+        if (getBg() != null ? !getScreens().equals(table.getBg()) : table.getBg() != null)
+            return false;
         return true;
 
     }
@@ -302,7 +307,15 @@ public class BroadcastTable implements Serializable {
         result = 31 * result + (screens != null ? screens.hashCode() : 0);
         result = 31 * result + (timeType != null ? timeType.hashCode() : 0);
         result = 31 * result + (isNeedDelay != null ? isNeedDelay.hashCode() : 0);
+        result = 31 * result + (bg != null ? bg.hashCode() : 0);
         return result;
+    }
+    public String getBg() {
+        return this.bg;
+    }
+
+    public void setBg(String bg) {
+        this.bg = bg;
     }
     
 }

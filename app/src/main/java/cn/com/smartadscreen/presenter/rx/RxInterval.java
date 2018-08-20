@@ -1,6 +1,6 @@
 package cn.com.smartadscreen.presenter.rx;
 
-import android.util.Log;
+
 import android.widget.TextView;
 
 import java.util.concurrent.TimeUnit;
@@ -11,7 +11,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
-import static org.greenrobot.eventbus.EventBus.TAG;
+
 
 public class RxInterval {
 

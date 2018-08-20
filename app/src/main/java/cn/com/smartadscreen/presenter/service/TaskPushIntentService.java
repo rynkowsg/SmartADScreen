@@ -19,6 +19,7 @@ import java.util.List;
 
 import cn.com.smartadscreen.locallog.SmartLocalLog;
 import cn.com.smartadscreen.locallog.entity.LogMsg;
+import cn.com.smartadscreen.main.ui.view.SmartToast;
 import cn.com.smartadscreen.model.bean.InitTaskPush;
 import cn.com.smartadscreen.model.bean.TaskPush;
 import cn.com.smartadscreen.model.db.entity.App;
@@ -31,13 +32,15 @@ import cn.com.smartadscreen.model.db.manager.DBManager;
 import cn.com.smartadscreen.model.db.manager.ScreenHelper;
 import cn.com.smartadscreen.model.sp.SPManager;
 import cn.com.smartadscreen.presenter.update.DataSourceUpdateModule;
-import cn.com.smartadscreen.utils.SmartToast;
+
 
 public class TaskPushIntentService extends IntentService {
 
     private int startId;
 
     private BroadcastTableHelper helper;
+    private boolean judgeNew;
+
 
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
@@ -106,7 +109,7 @@ public class TaskPushIntentService extends IntentService {
 
             list = new ArrayList<>();
             BroadcastTable needPlayTable = helper.getNearByBroadcastIdWhereIsNeedDelay(queryTime);
-            if(needPlayTable != null) {
+            if (needPlayTable != null) {
                 list.add(needPlayTable);
             }
             list.addAll(helper.queryAllDelayBroadcastTable(queryTime));
@@ -116,7 +119,9 @@ public class TaskPushIntentService extends IntentService {
             if (!list.isEmpty()) {
                 for (BroadcastTable bt : list) {
                     bt.resetScreens();
+                    Logger.i("遍历BroadcastTable:" + bt.getBg());
                     List<Screen> screens = ScreenHelper.getInstance().query(bt.getId());
+                    judgeNew = true;
                     for (Screen screen : screens) {
                         handleScreen(screen, true, bt);
                     }
@@ -155,6 +160,7 @@ public class TaskPushIntentService extends IntentService {
             Logger.i("切换播表意图, 当前播表Id: " + currentBtId);
             String action = intent.getStringExtra(DataSourceUpdateModule.EXTRA_SWITCH_BT_ACTION);
             list = new ArrayList<>();
+
             switch (action) {
                 case DataSourceUpdateModule.ACTION_SWITCH_BT_LEFT:
 
@@ -245,6 +251,13 @@ public class TaskPushIntentService extends IntentService {
         return screen != null && screen.getEnd().getTime() > System.currentTimeMillis();
     }
 
+//    private void  handleBg(String bg){
+//        JSONObject bgJson= new JSONObject();
+//        bgJson.put("datatype","bg");
+//        bgJson.put("background",bg);
+//
+//    }
+
     private void handleScreen(Screen screen, boolean pushForInit, BroadcastTable parentBt) {
         // 新数据 先修改为老数据
         screen.setNewLine(false);
@@ -297,15 +310,29 @@ public class TaskPushIntentService extends IntentService {
         JSONObject pushJson = new JSONObject();
         pushJson.put("datatype", "add");
         pushJson.put("screen", screenJson);
+        //添加background 背景图片
+//        if (judgeNew == true) {
+        if (parentBt.getBg() != null) {
+            pushJson.put("background", JSON.parse(parentBt.getBg()));
+            Logger.i("background:" + parentBt.getBg());
+
+        }
+//            judgeNew = false;
+//        }
+
+        Logger.i("推送message:" + pushJson.toString());
+
         // 移除Json
         JSONObject removeJson = new JSONObject();
         removeJson.put("datatype", "remove");
         removeJson.put("sid", screen.getSid());
 
+
         Date currentDate = new Date();
         if (screen.getStart().getTime() > currentDate.getTime()) {
             // 延迟推送
             // 推送
+
             TaskPush pushTaskPush = new TaskPush(String.valueOf(screen.getId()), pushJson.toString(), true, screen.getStart());
             pushTaskPush.setTimeType(parentBt.getTimeType());
             pushTaskPush.setLogoPath(parentBt.getLogo());
@@ -348,15 +375,16 @@ public class TaskPushIntentService extends IntentService {
         SmartLocalLog.writeLog(new LogMsg(LogMsg.TYPE_HANDLER, "Native", "Native",
                 "程序初始化检测到未下载完成播表数量 " + downloadingBtList.size()));
 
-        foo : for (BroadcastTable table : downloadingBtList) {
+        foo:
+        for (BroadcastTable table : downloadingBtList) {
             for (Screen screen : table.getScreens()) {
-                if(!checkScreen(screen)){
+                if (!checkScreen(screen)) {
                     continue foo;
                 }
             }
 
             SmartLocalLog.writeLog(new LogMsg(LogMsg.TYPE_HANDLER, "Native", "Native",
-                    "执行未下载完成播表，播表id="+ table.getId()));
+                    "执行未下载完成播表，播表id=" + table.getId()));
             BroadcastTableHelper.getInstance().deleteById(table.getId());
             DataSourceUpdateModule.doDataUpdate(JSON.parseObject(table.getContent()), true);
         }

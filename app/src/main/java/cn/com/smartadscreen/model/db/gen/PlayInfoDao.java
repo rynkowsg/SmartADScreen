@@ -16,7 +16,7 @@ import cn.com.smartadscreen.model.db.entity.PlayInfo;
  * DAO for table "PLAY_INFO".
 */
 public class PlayInfoDao extends AbstractDao<PlayInfo, Long> {
-//11111
+
     public static final String TABLENAME = "PLAY_INFO";
 
     /**

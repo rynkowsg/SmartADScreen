@@ -6,7 +6,7 @@ ext {
 
     greendao = [
             //数据库版本
-            schemaVersion = 1,
+            schemaVersion = 2,
             //设置DaoMaster、DaoSession、Dao包名
             daoPackage = "cn.com.smartadscreen.model.db.gen",
             //设置DaoMaster、DaoSession、Dao目录
