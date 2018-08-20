@@ -162,13 +162,13 @@ public class OtherSettingActivity extends BaseActivityV1 {
 
     @OnClick(R.id.btn_fixed_viewpager)
     public void setFixedViewPager() {
-        String[] items = {"Default (默认页面)", "Web (播表页面)", "Music (音乐页面)", "File (文件页面)", "无固定"};
+        String[] items = {"Default (默认页面)", "Web (播表页面)","无固定"};
         new AlertDialog.Builder(this)
                 .setTitle("请选择需要固定的标签页")
-                .setSingleChoiceItems(items, fixedPager == -1 ? 4 : fixedPager,
+                .setSingleChoiceItems(items, fixedPager == -1 ? 2 : fixedPager,
                         (dialog, which) -> {
                             btnFixedViewpager.setText(items[which]);
-                            if (which == 4) {
+                            if (which == 2) {
                                 which = -1;
                             }
                             SPManager.getManager().put(SPManager.KEY_FIXED_VIEWPAGER_INDEX, which);
