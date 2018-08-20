@@ -2,10 +2,12 @@ package cn.com.smartadscreen.presenter.service;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.facebook.stetho.common.LogUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -40,6 +42,7 @@ public class SendHistoryBtIntentServer extends IntentService {
     protected void onHandleIntent(Intent intent) {
         JSONObject msgObject = JSON.parseObject(intent.getStringExtra(DataSourceUpdateModule.EXTRA_UPDATE_OBJ));
         JSONObject content = msgObject.getJSONObject("content");
+        LogUtil.i("IntentService","content="+content);
         int page, pageSize, desc;
         String keyword;
         if (content.containsKey("page")) {
@@ -72,7 +75,7 @@ public class SendHistoryBtIntentServer extends IntentService {
         service.setDownloadKey(downloadKey);
 //        DBManager.getDaoSession().getServiceDao().insert(service);
         ServiceHelper.getInstance().insertOrRelease(service);
-
+        LogUtil.i("IntentService","service="+service);
         List<BroadcastTable> list = DBManager.getDaoSession().getBroadcastTableDao().queryBuilder()
                 .where(BroadcastTableDao.Properties.Content.like("%" + keyword + "%"))
                 .orderCustom(BroadcastTableDao.Properties.ModifyDate, desc == 0 ? "ASC" : "DESC")
@@ -86,6 +89,7 @@ public class SendHistoryBtIntentServer extends IntentService {
         }
 
         ReportMsg reportMsg = new ReportMsg(1, responseContent, downloadKey);
+        LogUtil.i("IntentService","reportMsg="+reportMsg);
         EventBus.getDefault().post(reportMsg);
     }
 

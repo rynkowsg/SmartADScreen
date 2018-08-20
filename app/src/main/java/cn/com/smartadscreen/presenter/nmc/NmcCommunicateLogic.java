@@ -57,7 +57,7 @@ public class NmcCommunicateLogic implements StartaiCommunicateRecv {
             SmartLocalLog.writeLog(new LogMsg(LogMsg.TYPE_RECEIVED, "NMC", "Native", "获得SDCard路径", remarks));
         }
         // NMC 返回设备 设备信息
-        if (CommunicateType.COMMUNICATE_TYPE_DEVICE_INFOMATION.equals(flag)) {
+        else if (CommunicateType.COMMUNICATE_TYPE_DEVICE_INFOMATION.equals(flag)) {
             DeviceInfoBean bean = JSONUtils.parseObject(msg, DeviceInfoBean.class);
             String sn = bean.getSn();
             String machineType = String.valueOf(bean.getMachineType());//机器类型
@@ -98,14 +98,14 @@ public class NmcCommunicateLogic implements StartaiCommunicateRecv {
 
         }
         // NMC 返回设备内存不足 清理缓存
-         if (CommunicateType.COMMUNICATE_TYPE_ROM_LIMIT.equals(flag)) {
+        else if (CommunicateType.COMMUNICATE_TYPE_ROM_LIMIT.equals(flag)) {
 
             SmartLocalLog.writeLog(new LogMsg(LogMsg.TYPE_RECEIVED, "NMC", "Native", "设备内存不足, 清理data资源"));
             DataSourceUpdateModule.doClearData();
 
         }
         // Nmc 返回替换播表 file 字段
-        if (CommunicateType.COMMUNICATE_TYPE_PLAYLIST_DISTRIBUTE_1.equals(flag)) {
+        else if (CommunicateType.COMMUNICATE_TYPE_PLAYLIST_DISTRIBUTE_1.equals(flag)) {
             // record
             ArrayList<String> remarks = new ArrayList<>();
             remarks.add("msg: " + msg);
@@ -115,7 +115,7 @@ public class NmcCommunicateLogic implements StartaiCommunicateRecv {
         }
 
         // NMC 返回 MIOF 协议
-        if (CommunicateType.COMMUNICATE_TYPE_MIOF.equals(flag)) {
+        else if (CommunicateType.COMMUNICATE_TYPE_MIOF.equals(flag)) {
 
             boolean isHandled = false;
             // msg confirm
@@ -172,7 +172,7 @@ public class NmcCommunicateLogic implements StartaiCommunicateRecv {
 
 
             // 0x8501 更新 web 文件
-            if ("0x8501".equals(msgType)) {
+            else if ("0x8501".equals(msgType)) {
                 isHandled = true;
                 // record
                 logMsg.setContent("更新 web 文件");
@@ -183,7 +183,7 @@ public class NmcCommunicateLogic implements StartaiCommunicateRecv {
             }
 
             // 0x8502 播表消息
-            if ("0x8502".equals(msgType)) {
+            else if ("0x8502".equals(msgType)) {
                 isHandled = true;
                 // record
                 logMsg.setContent("更新播表消息");
@@ -194,7 +194,7 @@ public class NmcCommunicateLogic implements StartaiCommunicateRecv {
             }
 
             // 0x8506 推送文件
-            if ("0x8506".equals(msgType)) {
+            else if ("0x8506".equals(msgType)) {
                 isHandled = true;
                 // record
                 logMsg.setContent("云端推送文件消息");
@@ -205,7 +205,7 @@ public class NmcCommunicateLogic implements StartaiCommunicateRecv {
             }
 
             // 0x8508 云端获得播表列表
-            if ("0x8508".equals(msgType)) {
+            else if ("0x8508".equals(msgType)) {
                 isHandled = true;
                 // record
                 logMsg.setContent("云端获得播表历史列表");
@@ -213,10 +213,11 @@ public class NmcCommunicateLogic implements StartaiCommunicateRecv {
 
                 // handler
                 DataSourceUpdateModule.doSendHistoryBt(msgObject);
+
             }
 
             // 0x8509 云端指定播放指定ID的播表
-            if ("0x8509".equals(msgType)) {
+            else  if ("0x8509".equals(msgType)) {
                 isHandled = true;
                 // record
                 logMsg.setContent("云端播放指定ID播表");
@@ -227,7 +228,7 @@ public class NmcCommunicateLogic implements StartaiCommunicateRecv {
             }
 
             // 0x8512 云端删除指定ID的播表
-            if ("0x8512".equals(msgType)) {
+            else if ("0x8512".equals(msgType)) {
                 isHandled = true;
                 // record
                 logMsg.setContent("云端删除指定播表");
@@ -251,7 +252,7 @@ public class NmcCommunicateLogic implements StartaiCommunicateRecv {
         }
 
         // NMC 返回下载进度消息
-        if (CommunicateType.COMMUNICATE_TYPE_FS_DOWNLOAD.equals(flag)) {
+        else if (CommunicateType.COMMUNICATE_TYPE_FS_DOWNLOAD.equals(flag)) {
 
             DownloadProgressBean bean = JSONUtils.parseObject(msg, DownloadProgressBean.class);
 
@@ -279,7 +280,7 @@ public class NmcCommunicateLogic implements StartaiCommunicateRecv {
             EventBus.getDefault().post(bean);
         }
         // NMC 返回实体按键消息
-        if (CommunicateType.COMMUNICATE_TYPE_KEY.equals(flag)) {
+        else if (CommunicateType.COMMUNICATE_TYPE_KEY.equals(flag)) {
 
             boolean enabledHardwareKey = SPManager.getManager().getBoolean(SPManager.KEY_ENABLED_HARDWARE_KEY, true);
             if (enabledHardwareKey) {
@@ -291,13 +292,13 @@ public class NmcCommunicateLogic implements StartaiCommunicateRecv {
         }
 
         // NMC 请求截图
-        if (CommunicateType.COMMUNICATE_TYPE_SCREENSHOT.equals(flag)) {
+        else if (CommunicateType.COMMUNICATE_TYPE_SCREENSHOT.equals(flag)) {
             OnScreenshot onScreenshot = JSON.parseObject(msg, OnScreenshot.class);
             EventBus.getDefault().post(onScreenshot);
             Logger.i("NMC 截屏");
         }
         // NMC 语音指令   云端操控播表
-        if (CommunicateType.COMMUNICATE_TYPE_VOICE_CONTROL.equals(flag)) {
+        else if (CommunicateType.COMMUNICATE_TYPE_VOICE_CONTROL.equals(flag)) {
             OnCommand onCommand = JSON.parseObject(msg, OnCommand.class);
             if (onCommand.getCmd() == CommunicateType.COMMUNICATE_TYPE_KEY_PLAY) {
                 new Handler().postDelayed(() -> EventBus.getDefault().post(onCommand), 1200);
@@ -308,7 +309,7 @@ public class NmcCommunicateLogic implements StartaiCommunicateRecv {
         }
 
         //NMC 删除播表
-        if (CommunicateType.COMMUNICATE_TYPE_DELETE_PLAYLIST.equals(flag)) {
+      else if (CommunicateType.COMMUNICATE_TYPE_DELETE_PLAYLIST.equals(flag)) {
             JSONObject delete = JSON.parseObject(msg);
             EventBus.getDefault().post(new BroadcastTableDeleteBean(delete.getString("id")));
         }
