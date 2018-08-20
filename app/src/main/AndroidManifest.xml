@@ -50,7 +50,9 @@
             android:name="cn.com.smartadscreen.main.ui.activity.SetupActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/ActivityTheme" />
-
+        <activity
+            android:name="cn.com.smartadscreen.main.ui.activity.ChangeLogActivity"
+            android:theme="@style/ActivityTheme" />
 
         <service android:name="cn.com.smartadscreen.presenter.service.LoadIntentService" />
         <service
@@ -89,7 +91,25 @@
             android:name="cn.com.smartadscreen.presenter.service.FileUpdateIntentService"
             android:enabled="true"
             android:exported="true" />
+        <service
+            android:name="cn.com.smartadscreen.presenter.service.SendHistoryBtIntentServer"
+            android:enabled="true"
+            android:exported="true" />
+        <activity
+            android:name="cn.com.smartadscreen.main.ui.activity.OtherSettingActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/ActivityTheme" />
 
+        <activity
+            android:name="cn.com.smartadscreen.main.ui.activity.DownloadActivity"
+            android:theme="@style/ActivityTheme" />
+
+        <activity
+            android:name="cn.com.smartadscreen.main.ui.activity.DeviceInfoActivity"
+            android:theme="@style/ActivityTheme" />
+        <activity
+            android:name="cn.com.smartadscreen.main.ui.activity.VoiceActivity"
+            android:theme="@style/TranslucentStyle" />
         <receiver
             android:name="cn.com.smartadscreen.presenter.broadcast.AnrReceiver"
             android:enabled="true">

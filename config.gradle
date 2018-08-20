@@ -20,8 +20,8 @@ ext {
         applicationId = "cn.com.startai.smartadh5",
         minSdkVersion = 17,
         targetSdkVersion = 26,
-        versionCode = 2107,
-        versionName = '0.2.107',
+        versionCode = 2110,
+        versionName = '0.2.110',
         debug_log_debug = "true"
     ]
 
