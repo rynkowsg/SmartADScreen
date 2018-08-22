@@ -1,6 +1,7 @@
 package cn.com.smartadscreen.main.ui.view;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
@@ -11,7 +12,6 @@ import android.view.SurfaceHolder;
 import com.facebook.stetho.common.LogUtil;
 
 import java.util.ArrayList;
-
 
 
 /**
@@ -160,7 +160,7 @@ public class MarqueeRefreshThread implements Runnable {
 
             if (mCurPoint >= mShowTxts.size()) {
                 // 最后一帧
-                if (mCurFrame.step > ( mCurFrame.measureWidth + drawX)) {
+                if (mCurFrame.step > (mCurFrame.measureWidth + drawX)) {
                     LogUtil.e(TAG, " draw the last frame finish");
                     swap();
                     mCurFrame.step = 0;
@@ -230,14 +230,15 @@ public class MarqueeRefreshThread implements Runnable {
                 try {
 
                     mCanvas = holder.lockCanvas(rect);
-
+                    //清屏,防止双缓冲技术导致画布重叠
+                    mCanvas.drawColor(Color.BLACK);
                     if (mCanvas == null) {
                         LogUtil.e(TAG, " lockCanvas canvas == null ");
                         continue;
                     }
 
                     long checkEmptyMillis = System.currentTimeMillis();
-
+                    //绘制
                     drawCanvas(mCanvas);
 
                     long diff = (System.currentTimeMillis() - checkEmptyMillis);

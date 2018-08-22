@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -181,6 +183,7 @@ public class IndexActivity extends BaseActivityV1 implements XWalkInitializer.XW
             mViewPager.setCurrentItem(fixedPager);
         } else {
             mViewPager.setCurrentItem(0);
+
         }
 
     }
