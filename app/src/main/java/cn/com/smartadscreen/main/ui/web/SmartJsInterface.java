@@ -171,6 +171,7 @@ public class SmartJsInterface {
         remarks.add("dpWidth:" + dpWidth);
         remarks.add("dpHeight:" + dpHeight);
         remarks.add("videoInfo:" + videoInfo);
+
         SmartLocalLog.writeLog(new LogMsg(LogMsg.TYPE_RECEIVED, "HTML", "Native", "播放视频参数", remarks));
         onVideoPlayer.setCallbackKey(callBackKey);
         EventBus.getDefault().post(onVideoPlayer);
@@ -206,6 +207,8 @@ public class SmartJsInterface {
         remarks.add("dpWidth:" + dpWidth);
         remarks.add("dpHeight:" + dpHeight);
         remarks.add("textInfo:" + textInfo);
+        remarks.add("speeed:"+onTextPlayer.getSpeed());
+        remarks.add("textcolor:"+onTextPlayer.getColor());
         SmartLocalLog.writeLog(new LogMsg(LogMsg.TYPE_RECEIVED, "HTML", "Native", "跑马灯参数", remarks));
 
         onTextPlayer.setCallbackKey(callBackKey);

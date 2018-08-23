@@ -91,6 +91,7 @@ public class DataUpdateIntentService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         String updateObj = intent.getStringExtra(DataSourceUpdateModule.EXTRA_UPDATE_OBJ);
         JSONObject msgRoot = JSON.parseObject(updateObj);
+        LogUtil.i("msgRoot:"+msgRoot.toJSONString());
         try {
             handle(msgRoot);
         } catch (Exception e) {
@@ -247,7 +248,7 @@ public class DataUpdateIntentService extends IntentService {
                 service.setDownloadKey(downloadKey);
                 ServiceHelper.getInstance().insertOrRelease(service);
 
-                //todo 比较背景图片是否一致
+                // 比较背景图片是否一致
                 String exBg = existBt.getBg();
                 if (exBg != null && bg != null && !exBg.equals(bg)) {
 
