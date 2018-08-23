@@ -6,7 +6,7 @@ ext {
 
     greendao = [
             //数据库版本
-            schemaVersion = 1,
+            schemaVersion = 3,
             //设置DaoMaster、DaoSession、Dao包名
             daoPackage = "cn.com.smartadscreen.model.db.gen",
             //设置DaoMaster、DaoSession、Dao目录
@@ -20,8 +20,8 @@ ext {
         applicationId = "cn.com.startai.smartadh5",
         minSdkVersion = 17,
         targetSdkVersion = 26,
-        versionCode = 2111,
-        versionName = '0.2.111',
+        versionCode = 2110,
+        versionName = '0.2.110',
         debug_log_debug = "true"
     ]
 

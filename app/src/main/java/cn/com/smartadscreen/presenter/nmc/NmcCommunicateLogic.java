@@ -125,6 +125,9 @@ public class NmcCommunicateLogic implements StartaiCommunicateRecv {
             ArrayList<String> remarks = new ArrayList<>();
             // get object
             JSONObject msgObject = JSON.parseObject(msg);
+
+            remarks.add("message:"+msg);
+            SmartLocalLog.writeLog(new LogMsg(LogMsg.TYPE_RECEIVED, "Native", "Native", "最开始接收到播表消息", remarks));
             String msgType = msgObject.getString("msgtype");
             try {
                 remarks.add("data: " + msgObject.getJSONObject("content").toString());

@@ -228,10 +228,8 @@ public class MarqueeRefreshThread implements Runnable {
                 Canvas mCanvas = null;
 
                 try {
-
                     mCanvas = holder.lockCanvas(rect);
-                    //清屏,防止双缓冲技术导致画布重叠
-                    mCanvas.drawColor(Color.BLACK);
+                    mCanvas.drawColor(Color.TRANSPARENT,PorterDuff.Mode.SRC);
                     if (mCanvas == null) {
                         LogUtil.e(TAG, " lockCanvas canvas == null ");
                         continue;
