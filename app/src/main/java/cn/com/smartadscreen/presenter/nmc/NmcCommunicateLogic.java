@@ -16,8 +16,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
-import cn.com.smartadscreen.eventbus.bean.Event;
-import cn.com.smartadscreen.eventbus.utils.EventBusUtils;
+
 import cn.com.smartadscreen.locallog.SmartLocalLog;
 import cn.com.smartadscreen.locallog.entity.LogMsg;
 import cn.com.smartadscreen.model.bean.BroadcastTableDeleteBean;
