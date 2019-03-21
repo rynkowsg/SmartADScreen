@@ -8,6 +8,7 @@ import android.util.Log;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.EncodeUtils;
 import com.facebook.stetho.common.LogUtil;
 import com.orhanobut.logger.Logger;
 
@@ -15,6 +16,8 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
+import cn.com.smartadscreen.eventbus.bean.Event;
+import cn.com.smartadscreen.eventbus.utils.EventBusUtils;
 import cn.com.smartadscreen.locallog.SmartLocalLog;
 import cn.com.smartadscreen.locallog.entity.LogMsg;
 import cn.com.smartadscreen.model.bean.BroadcastTableDeleteBean;

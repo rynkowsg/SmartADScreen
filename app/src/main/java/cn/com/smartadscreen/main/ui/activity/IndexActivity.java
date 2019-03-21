@@ -26,6 +26,7 @@ import org.xwalk.core.XWalkInitializer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Handler;
 
 import javax.inject.Inject;
 
@@ -105,7 +106,7 @@ public class IndexActivity extends BaseActivityV1 implements XWalkInitializer.XW
 
     @Override
     public void initData() {
-        Logger.d("index"+"oncreate");
+        Logger.d("index" + "oncreate");
         if (Config.screenOff) {
             isBtStop = true;
         }
@@ -142,13 +143,15 @@ public class IndexActivity extends BaseActivityV1 implements XWalkInitializer.XW
         mFragments.add(mDefaultFragment);
 
         //设置渲染方式为 SurfaceView
-//        GSYVideoType.setRenderType(GSYVideoType.GLSURFACE);
+        GSYVideoType.setRenderType(GSYVideoType.TEXTURE);
         //设置开启 精准进度条
         VideoOptionModel videoOptionModel1 = new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "enable-accurate-seek", 1);
         List<VideoOptionModel> list = new ArrayList<>();
-
-        GSYVideoType.enableMediaCodec();
-        GSYVideoType.enableMediaCodecTexture();
+        //开启硬解码
+//        GSYVideoType.enableMediaCodec();
+//        GSYVideoType.enableMediaCodecTexture();
+        GSYVideoType.disableMediaCodecTexture();
+        GSYVideoType.disableMediaCodec();
         //广告屏
         mFragments.add(mWebFragment);
 
@@ -183,7 +186,6 @@ public class IndexActivity extends BaseActivityV1 implements XWalkInitializer.XW
             mViewPager.setCurrentItem(fixedPager);
         } else {
             mViewPager.setCurrentItem(0);
-
         }
 
     }
@@ -191,14 +193,14 @@ public class IndexActivity extends BaseActivityV1 implements XWalkInitializer.XW
     @Override
     protected void onResume() {
         super.onResume();
-        Logger.d("index"+"onResume");
+        Logger.d("index" + "onResume");
         PluginServer.sendServerPause(false);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Logger.d("index"+"onPause");
+        Logger.d("index" + "onPause");
         PluginServer.sendServerPause(true);
     }
 
@@ -397,6 +399,7 @@ public class IndexActivity extends BaseActivityV1 implements XWalkInitializer.XW
             Logger.i("H5请求原生取消文字跑马灯！");
 
             if (mWebFragment != null) {
+
                 mWebFragment.onCancelText(onTextPlayer.getTextId(), true);
                 SmartLocalLog.writeLog(new LogMsg(LogMsg.TYPE_RECEIVED, "HTML", "Native"
                         , "H5请求原生取消文字跑马灯!"));
@@ -477,7 +480,7 @@ public class IndexActivity extends BaseActivityV1 implements XWalkInitializer.XW
 
     @Override
     public void setCurrentItem(int item) {
-        Logger.i("item"+item);
+        Logger.i("item" + item);
 
         mViewPager.setCurrentItem(item);
     }
@@ -490,7 +493,7 @@ public class IndexActivity extends BaseActivityV1 implements XWalkInitializer.XW
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Logger.d("index"+"onDestroy");
+        Logger.d("index" + "onDestroy");
         EventBus.getDefault().unregister(this);
         indexPresenter.unRegister();
         //检测泄露

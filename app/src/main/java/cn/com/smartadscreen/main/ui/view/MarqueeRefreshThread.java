@@ -145,8 +145,8 @@ public class MarqueeRefreshThread implements Runnable {
     private int mCurPoint = 0;
 
     private void drawCanvas(Canvas mCanvas) {
-        mCanvas.save();
         doLayerClear(mCanvas);
+        mCanvas.save();
 
         float x = drawX - mCurFrame.step;
         mCurFrame.step += stepSpeed;
@@ -229,7 +229,7 @@ public class MarqueeRefreshThread implements Runnable {
 
                 try {
                     mCanvas = holder.lockCanvas(rect);
-                    mCanvas.drawColor(Color.TRANSPARENT,PorterDuff.Mode.SRC);
+
                     if (mCanvas == null) {
                         LogUtil.e(TAG, " lockCanvas canvas == null ");
                         continue;
@@ -243,12 +243,13 @@ public class MarqueeRefreshThread implements Runnable {
 
 
                 } catch (Exception e) {
-
+                    break;
                 } finally {
                     if (mCanvas != null) {
                         try {
                             holder.unlockCanvasAndPost(mCanvas);
                         } catch (Exception e) {
+
                         }
                     }
 
@@ -278,6 +279,10 @@ public class MarqueeRefreshThread implements Runnable {
 
     private static final int MAX_MSG_LENGTH = 500;
 
+    /**分离数据
+     * @param marqueeString
+     * @return
+     */
     private ArrayList<Frame> splitData(String marqueeString) {
         ArrayList<Frame> data = new ArrayList<>();
 

@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 
 import org.greenrobot.eventbus.EventBus;
 
+import cn.com.smartadscreen.presenter.main.SetupPresenter;
+
 /**
  * Created by Taro on 2017/3/13.
  * BaseActivity

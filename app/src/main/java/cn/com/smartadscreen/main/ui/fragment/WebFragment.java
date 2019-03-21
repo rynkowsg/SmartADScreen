@@ -70,6 +70,7 @@ public class WebFragment extends BaseFragment {
     private int minTime = 1000;
     private String TAG = "WebFragment";
 
+
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return parentView = (RelativeLayout) inflater.inflate(R.layout.fragment_web, container, false);
@@ -146,10 +147,10 @@ public class WebFragment extends BaseFragment {
 
     private void initTextClock() {
         statusBar = new StatusBar(getContext());
-        if (statusBar==null){
+        if (statusBar == null) {
             Logger.i("statusBar...null");
-        }else{
-            Logger.i("statusBar"+statusBar);
+        } else {
+            Logger.i("statusBar" + statusBar);
         }
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -181,7 +182,7 @@ public class WebFragment extends BaseFragment {
             log = "隐藏时间! ";
         }
         Logger.i(log);
-        Logger.i("showtime"+showTime);
+        Logger.i("showtime" + showTime);
         statusBar.setTimeShow(showTime);
     }
 
@@ -241,7 +242,7 @@ public class WebFragment extends BaseFragment {
     public void onPlayVideo(OnVideoPlayer onVideoPlayer) {
 
         LogUtil.v(TAG_WEB, " onPlayVideo  curMillis:" + System.currentTimeMillis());
-        //TODO 使用了GXY播放
+        //使用了GXY播放
         if (videoViewMap.containsKey(onVideoPlayer.getVideoId())
                 && onVideoPlayer.getCurrentPosition() == 0) {
             EmptyFullVideoView videoView =
@@ -362,6 +363,7 @@ public class WebFragment extends BaseFragment {
 //        mVideoParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
 //        mVideoParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
     }
+
     /**
      * 撤销视频
      **/

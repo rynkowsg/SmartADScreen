@@ -163,7 +163,7 @@ public class IndexPresenter implements IndexContract.Presenter {
     public void takeScreenshot(OnScreenshot screenshot) {
         Logger.i("开始截屏");
         // 获取屏幕
-        View dView = view.getWindow().getDecorView();//todo  注意
+        View dView = view.getWindow().getDecorView();
         dView.setDrawingCacheEnabled(true);
         dView.buildDrawingCache();
         Bitmap bmp = dView.getDrawingCache();

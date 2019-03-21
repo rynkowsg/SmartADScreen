@@ -161,4 +161,10 @@ public class AutoScrollMarqueeView extends SurfaceView implements SurfaceHolder.
         }
 
     }
+//    public void  stopMarquee(){
+//        if (mDrawThread != null) {
+//            mDrawThread.stop();
+//            mDrawThread = null;
+//        }
+//    }
 }

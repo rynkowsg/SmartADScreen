@@ -1,5 +1,6 @@
 package cn.com.smartadscreen.main.ui.base;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,6 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 
 import com.alibaba.fastjson.JSONObject;
+import com.hjq.permissions.OnPermission;
+import com.hjq.permissions.XXPermissions;
+
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -23,7 +28,7 @@ import cn.startai.apkcommunicate.StartaiCommunicate;
  * 作用：activity 基类
  */
 
-public abstract class BaseActivityV1 extends AppCompatActivity implements IActivity{
+public abstract class BaseActivityV1 extends AppCompatActivity implements IActivity {
 
     private Unbinder unbinder;
     protected boolean isForeground = true;
@@ -37,6 +42,28 @@ public abstract class BaseActivityV1 extends AppCompatActivity implements IActiv
         this.initData();
         this.initView();
         this.addViewListener();
+        getPremissions();
+    }
+
+    /**
+     * 动态申请权限
+     **/
+    public void getPremissions() {
+
+        XXPermissions.with(this).permission(Manifest.permission.INTERNET,
+                Manifest.permission.ACCESS_NETWORK_STATE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.WAKE_LOCK, Manifest.permission.SYSTEM_ALERT_WINDOW,
+                Manifest.permission.READ_EXTERNAL_STORAGE).request(new OnPermission() {
+            @Override
+            public void hasPermission(List<String> list, boolean b) {
+
+            }
+
+            @Override
+            public void noPermission(List<String> list, boolean b) {
+
+            }
+        });
     }
 
     @Override
@@ -64,7 +91,7 @@ public abstract class BaseActivityV1 extends AppCompatActivity implements IActiv
     @Override
     public void onBackPressed() {
         // 调起APP设置界面
-        if(shouldInterceptBack()) {
+        if (shouldInterceptBack()) {
             SetupActivity.actionStart(this);
         } else {
             super.onBackPressed();
@@ -77,7 +104,7 @@ public abstract class BaseActivityV1 extends AppCompatActivity implements IActiv
             JSONObject keyObject = new JSONObject();
             keyObject.put("keyCode", keyCode);
             StartaiCommunicate.getInstance().send(this.getApplicationContext(), CommunicateType.COMMUNICATE_TYPE_KEY, keyObject.toString());
-            return false ;
+            return false;
         }
         return super.onKeyDown(keyCode, event);
     }
@@ -88,7 +115,7 @@ public abstract class BaseActivityV1 extends AppCompatActivity implements IActiv
         isForeground = false;
     }
 
-    public boolean isForeground(){
+    public boolean isForeground() {
         return isForeground;
     }
 
