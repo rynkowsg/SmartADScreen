@@ -136,6 +136,10 @@ public class DefaultClockFragment extends BaseFragment {
     }
 
     private void getWeatherData(DeviceInfoBean.WeatherInfo weatherInfo) {
+        if(weatherInfo==null){
+            System.out.println("weatherInfo = null");
+            return;
+        }
         String weatherNow = weatherInfo.getTem_now(); //现在温度
         String weatherMax = weatherInfo.getTmp_max();//最高温度
         String weatherMin = weatherInfo.getTmp_min();//最低温度

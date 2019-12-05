@@ -1,14 +1,10 @@
 package cn.com.smartadscreen.presenter.nmc;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
-import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.blankj.utilcode.util.ActivityUtils;
-import com.blankj.utilcode.util.EncodeUtils;
 import com.facebook.stetho.common.LogUtil;
 import com.orhanobut.logger.Logger;
 
@@ -27,12 +23,10 @@ import cn.com.smartadscreen.model.bean.config.Config;
 import cn.com.smartadscreen.model.bean.event.HardwareKey;
 import cn.com.smartadscreen.model.bean.event.OnCommand;
 import cn.com.smartadscreen.model.bean.event.OnLoadFinished;
-import cn.com.smartadscreen.model.bean.event.OnScreenshot;
 import cn.com.smartadscreen.model.db.entity.DownloadTable;
 import cn.com.smartadscreen.model.db.manager.DownloadTableHelper;
 import cn.com.smartadscreen.model.sp.SPManager;
 import cn.com.smartadscreen.presenter.manager.DownloadManager;
-import cn.com.smartadscreen.presenter.service.PluginServer;
 import cn.com.smartadscreen.presenter.update.DataSourceUpdateModule;
 import cn.com.smartadscreen.presenter.update.HotCodeUpdateModule;
 import cn.com.smartadscreen.utils.JSONUtils;
@@ -128,26 +122,21 @@ public class NmcCommunicateLogic implements StartaiCommunicateRecv {
             // get object
             JSONObject msgObject = JSON.parseObject(msg);
 
-            remarks.add("message:"+msg);
+            remarks.add("message:" + msg);
             SmartLocalLog.writeLog(new LogMsg(LogMsg.TYPE_RECEIVED, "Native", "Native", "最开始接收到播表消息", remarks));
-            String msgType = msgObject.getString("msgtype");
+            String msgType = msgObject.getString("method");
             try {
-                remarks.add("data: " + msgObject.getJSONObject("content").toString());
+                remarks.add("data: " + msgObject.getJSONObject("params").toString());
             } catch (Exception e) {
                 e.printStackTrace();
                 Logger.e("JSON解析错误: " + e.getMessage());
                 // 回复云端，json解析错误
 
                 ReportErrorMsg errorMsg = new ReportErrorMsg();
-                errorMsg.setResult(0);
-                errorMsg.setMsgcw(NmcReport.getReportMsgcw(msgObject.getString("msgcw")));
-                errorMsg.setToid(msgObject.getString("fromid"));
-                errorMsg.setTs(System.currentTimeMillis());
-                errorMsg.setMsgtype(msgType);
-                JSONObject content = new JSONObject();
-                content.put("msg", "JSON解析错误");
-                errorMsg.setContent(content);
-                EventBus.getDefault().post( errorMsg );
+                errorMsg.setError("JSON解析错误");
+                errorMsg.setCode(-3);
+                errorMsg.setRequestId(msgObject.getString("requestId"));
+                EventBus.getDefault().post(errorMsg);
 
                 return;
             } finally {
@@ -188,7 +177,7 @@ public class NmcCommunicateLogic implements StartaiCommunicateRecv {
             }
 
             // 0x8502 播表消息
-            else if ("0x8502".equals(msgType)) {
+            else if (msgType.endsWith("0x8502")) {
                 isHandled = true;
                 // record
                 logMsg.setContent("更新播表消息");
@@ -222,7 +211,7 @@ public class NmcCommunicateLogic implements StartaiCommunicateRecv {
             }
 
             // 0x8509 云端指定播放指定ID的播表
-            else  if ("0x8509".equals(msgType)) {
+            else if ("0x8509".equals(msgType)) {
                 isHandled = true;
                 // record
                 logMsg.setContent("云端播放指定ID播表");
@@ -243,16 +232,16 @@ public class NmcCommunicateLogic implements StartaiCommunicateRecv {
                 DataSourceUpdateModule.doDelFiles(msgObject);
             }
 
-            if (!isHandled) {
-                // record
-                logMsg.setContent("未处理 MIOF 消息, 向下传递!");
-                SmartLocalLog.writeLog(logMsg);
-
-                int code = Integer.valueOf(msgType.substring(msgType.indexOf("x") + 1));
-                JSONObject messageContent = msgObject.getJSONObject("content");
-                String reportId = msgObject.getString("fromid");
-                PluginServer.sendPluginMessage(code, messageContent.toString(), reportId);
-            }
+//            if (!isHandled) {
+//                // record
+//                logMsg.setContent("未处理 MIOF 消息, 向下传递!");
+//                SmartLocalLog.writeLog(logMsg);
+//
+//                int code = Integer.valueOf(msgType.substring(msgType.indexOf("x") + 1));
+//                JSONObject messageContent = msgObject.getJSONObject("content");
+//                String reportId = msgObject.getString("fromid");
+//                PluginServer.sendPluginMessage(code, messageContent.toString(), reportId);
+//            }
 
         }
 
@@ -296,12 +285,6 @@ public class NmcCommunicateLogic implements StartaiCommunicateRecv {
             }
         }
 
-        // NMC 请求截图
-        else if (CommunicateType.COMMUNICATE_TYPE_SCREENSHOT.equals(flag)) {
-            OnScreenshot onScreenshot = JSON.parseObject(msg, OnScreenshot.class);
-            EventBus.getDefault().post(onScreenshot);
-            Logger.i("NMC 截屏");
-        }
         // NMC 语音指令   云端操控播表
         else if (CommunicateType.COMMUNICATE_TYPE_VOICE_CONTROL.equals(flag)) {
             OnCommand onCommand = JSON.parseObject(msg, OnCommand.class);
@@ -314,7 +297,7 @@ public class NmcCommunicateLogic implements StartaiCommunicateRecv {
         }
 
         //NMC 删除播表
-      else if (CommunicateType.COMMUNICATE_TYPE_DELETE_PLAYLIST.equals(flag)) {
+        else if (CommunicateType.COMMUNICATE_TYPE_DELETE_PLAYLIST.equals(flag)) {
             JSONObject delete = JSON.parseObject(msg);
             EventBus.getDefault().post(new BroadcastTableDeleteBean(delete.getString("id")));
         }

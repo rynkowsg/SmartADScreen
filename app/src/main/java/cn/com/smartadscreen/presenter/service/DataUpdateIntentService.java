@@ -91,7 +91,7 @@ public class DataUpdateIntentService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         String updateObj = intent.getStringExtra(DataSourceUpdateModule.EXTRA_UPDATE_OBJ);
         JSONObject msgRoot = JSON.parseObject(updateObj);
-        LogUtil.i("msgRoot:"+msgRoot.toJSONString());
+        LogUtil.i("msgRoot:" + msgRoot.toJSONString());
         try {
             handle(msgRoot);
         } catch (Exception e) {
@@ -100,15 +100,20 @@ public class DataUpdateIntentService extends IntentService {
             // 回复云端，播表解析错误
 
             ReportErrorMsg errorMsg = new ReportErrorMsg();
-            errorMsg.setResult(0);
-            errorMsg.setMsgcw(NmcReport.getReportMsgcw(msgRoot.getString("msgcw")));
-            errorMsg.setToid(msgRoot.getString("fromid"));
-            errorMsg.setTs(System.currentTimeMillis());
-            errorMsg.setMsgtype(msgRoot.getString("msgtype"));
-            JSONObject content = new JSONObject();
-            content.put("msg", "播表解析错误");
-            content.put("msgInfo", e.toString());
-            errorMsg.setContent(content);
+            errorMsg.setCode(-3);
+            errorMsg.setRequestId(msgRoot.getString("requestId"));
+            errorMsg.setError("播表解析错误");
+
+
+//            errorMsg.setResult(0);
+////            errorMsg.setMsgcw(NmcReport.getReportMsgcw(msgRoot.getString("msgcw")));
+////            errorMsg.setToid(msgRoot.getString("fromid"));
+////            errorMsg.setTs(System.currentTimeMillis());
+////            errorMsg.setMsgtype(msgRoot.getString("msgtype"));
+////            JSONObject content = new JSONObject();
+////            content.put("msg", "播表解析错误");
+////            content.put("msgInfo", e.toString());
+////            errorMsg.setContent(content);
             EventBus.getDefault().post(errorMsg);
 
             SmartToast.error("播表处理程序发生异常");
@@ -132,7 +137,7 @@ public class DataUpdateIntentService extends IntentService {
         checkLocalFileRemarks = new ArrayList<>();
         msgRoot.put("ts", 0);
 
-        JSONObject contentRoot = msgRoot.getJSONObject("content");
+        JSONObject contentRoot = msgRoot.getJSONObject("params");
         Logger.i("acg原始数据:" + contentRoot.toJSONString());
         Service service = DataSourceUpdateModule.getServiceFromJson(msgRoot);
 
@@ -146,7 +151,7 @@ public class DataUpdateIntentService extends IntentService {
         String bg = contentRoot.toJSONString().contains("Bg") ? contentRoot.getString("Bg") : null;
         JSONObject bgJson = contentRoot.getJSONObject("Bg");
         Logger.i("name:" + name);
-        Logger.i("bg:"+bg);
+        Logger.i("bg:" + bg);
 
         // playType: 0 -> 置顶 1 -> 不回放
         Integer playType = contentRoot.getInteger("playType");
@@ -214,10 +219,10 @@ public class DataUpdateIntentService extends IntentService {
                 int i = 2;
 
                 if (existBt.getFinished()) {
-                    reportMsg.setResult(1);
+                    reportMsg.setCode(0);
                     content.put("msg", "播表重复，文件下载完成");
                 } else {
-                    reportMsg.setResult(-1);
+                    reportMsg.setCode(5);
                     content.put("msg", "播表重复，文件正在下载");
                 }
                 reportMsg.setDownloadKey(existBt.getDownloadKey());
@@ -252,7 +257,7 @@ public class DataUpdateIntentService extends IntentService {
                 String exBg = existBt.getBg();
                 if (exBg != null && bg != null && !exBg.equals(bg)) {
 
-                    handleBg(bgJson,existBt);
+                    handleBg(bgJson, existBt);
                 }
 
                 handleScreens(existBt, screens);
@@ -296,7 +301,7 @@ public class DataUpdateIntentService extends IntentService {
             saveStickBt(playType, bt.getId());
             //todo 比较背景图片是否一致
             if (bg != null) {
-                handleBg(bgJson,bt);
+                handleBg(bgJson, bt);
             }
             handleScreens(bt, screens);
 
@@ -342,7 +347,7 @@ public class DataUpdateIntentService extends IntentService {
     /**
      * 处理下载背景图片
      **/
-    private void handleBg(JSONObject bgJsonString,BroadcastTable parentBt) {
+    private void handleBg(JSONObject bgJsonString, BroadcastTable parentBt) {
 
 
         ContentItemBean contentBgBean = JSON.parseObject(bgJsonString.toJSONString(), ContentItemBean.class);
@@ -378,11 +383,10 @@ public class DataUpdateIntentService extends IntentService {
             remark.append("\n本地文件路径: ");
             remark.append(filePath);
             contentBgBean.setPath(filePath);
-            bgJsonString.put("path",filePath);
+            bgJsonString.put("path", filePath);
 
             parentBt.setBg(bgJsonString.toJSONString());
             parentBt.update();
-
 
 
             if (!checkLocalFile(filePath, hash, hash2)) {

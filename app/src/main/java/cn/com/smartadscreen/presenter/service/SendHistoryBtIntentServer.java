@@ -41,7 +41,8 @@ public class SendHistoryBtIntentServer extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         JSONObject msgObject = JSON.parseObject(intent.getStringExtra(DataSourceUpdateModule.EXTRA_UPDATE_OBJ));
-        JSONObject content = msgObject.getJSONObject("content");
+        JSONObject content = msgObject.getJSONObject("params");
+        String requestId = msgObject.getString("requestId");
         LogUtil.i("IntentService","content="+content);
         int page, pageSize, desc;
         String keyword;
@@ -88,7 +89,7 @@ public class SendHistoryBtIntentServer extends IntentService {
             responseContent.add(DataSourceUpdateModule.getBtContent(bt));
         }
 
-        ReportMsg reportMsg = new ReportMsg(1, responseContent, downloadKey);
+        ReportMsg reportMsg = new ReportMsg(0,requestId, responseContent, downloadKey);
         LogUtil.i("IntentService","reportMsg="+reportMsg);
         EventBus.getDefault().post(reportMsg);
     }

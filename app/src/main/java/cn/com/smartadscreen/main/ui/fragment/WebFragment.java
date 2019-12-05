@@ -146,7 +146,7 @@ public class WebFragment extends BaseFragment {
      */
 
     private void initTextClock() {
-        statusBar = new StatusBar(getContext());
+        statusBar = new StatusBar(Application.getContext());
         if (statusBar == null) {
             Logger.i("statusBar...null");
         } else {
@@ -503,7 +503,7 @@ public class WebFragment extends BaseFragment {
 
         RelativeLayout.LayoutParams marqueeParams = new RelativeLayout.LayoutParams(onTextPlayer.getWidth(), onTextPlayer.getHeight());
         marqueeParams.setMargins(onTextPlayer.getX(), onTextPlayer.getY(), 0, 0);
-        AutoScrollMarqueeView marqueeView = new AutoScrollMarqueeView(getContext());
+        AutoScrollMarqueeView marqueeView = new AutoScrollMarqueeView(Application.getContext());
         marqueeView.setLayoutParams(marqueeParams);
         marqueeView.setTextColor(onTextPlayer.getColor());
         marqueeView.setBackgroundColor(Color.parseColor(onTextPlayer.getBackgroundColor()));

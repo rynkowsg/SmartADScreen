@@ -25,14 +25,9 @@ public class ServiceDao extends AbstractDao<Service, Long> {
      */
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property Msgcw = new Property(1, String.class, "msgcw", false, "MSGCW");
-        public final static Property Msgtype = new Property(2, String.class, "msgtype", false, "MSGTYPE");
-        public final static Property Fromid = new Property(3, String.class, "fromid", false, "FROMID");
-        public final static Property Toid = new Property(4, String.class, "toid", false, "TOID");
-        public final static Property Ts = new Property(5, long.class, "ts", false, "TS");
-        public final static Property Msgid = new Property(6, String.class, "msgid", false, "MSGID");
-        public final static Property Result = new Property(7, int.class, "result", false, "RESULT");
-        public final static Property DownloadKey = new Property(8, String.class, "downloadKey", false, "DOWNLOAD_KEY");
+        public final static Property RequestId = new Property(1, String.class, "requestId", false, "REQUEST_ID");
+        public final static Property Method = new Property(2, String.class, "method", false, "METHOD");
+        public final static Property DownloadKey = new Property(3, String.class, "downloadKey", false, "DOWNLOAD_KEY");
     }
 
 
@@ -49,14 +44,9 @@ public class ServiceDao extends AbstractDao<Service, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"SERVICE\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
-                "\"MSGCW\" TEXT," + // 1: msgcw
-                "\"MSGTYPE\" TEXT," + // 2: msgtype
-                "\"FROMID\" TEXT," + // 3: fromid
-                "\"TOID\" TEXT," + // 4: toid
-                "\"TS\" INTEGER NOT NULL ," + // 5: ts
-                "\"MSGID\" TEXT," + // 6: msgid
-                "\"RESULT\" INTEGER NOT NULL ," + // 7: result
-                "\"DOWNLOAD_KEY\" TEXT);"); // 8: downloadKey
+                "\"REQUEST_ID\" TEXT," + // 1: requestId
+                "\"METHOD\" TEXT," + // 2: method
+                "\"DOWNLOAD_KEY\" TEXT);"); // 3: downloadKey
     }
 
     /** Drops the underlying database table. */
@@ -74,36 +64,19 @@ public class ServiceDao extends AbstractDao<Service, Long> {
             stmt.bindLong(1, id);
         }
  
-        String msgcw = entity.getMsgcw();
-        if (msgcw != null) {
-            stmt.bindString(2, msgcw);
+        String requestId = entity.getRequestId();
+        if (requestId != null) {
+            stmt.bindString(2, requestId);
         }
  
-        String msgtype = entity.getMsgtype();
-        if (msgtype != null) {
-            stmt.bindString(3, msgtype);
+        String method = entity.getMethod();
+        if (method != null) {
+            stmt.bindString(3, method);
         }
- 
-        String fromid = entity.getFromid();
-        if (fromid != null) {
-            stmt.bindString(4, fromid);
-        }
- 
-        String toid = entity.getToid();
-        if (toid != null) {
-            stmt.bindString(5, toid);
-        }
-        stmt.bindLong(6, entity.getTs());
- 
-        String msgid = entity.getMsgid();
-        if (msgid != null) {
-            stmt.bindString(7, msgid);
-        }
-        stmt.bindLong(8, entity.getResult());
  
         String downloadKey = entity.getDownloadKey();
         if (downloadKey != null) {
-            stmt.bindString(9, downloadKey);
+            stmt.bindString(4, downloadKey);
         }
     }
 
@@ -116,36 +89,19 @@ public class ServiceDao extends AbstractDao<Service, Long> {
             stmt.bindLong(1, id);
         }
  
-        String msgcw = entity.getMsgcw();
-        if (msgcw != null) {
-            stmt.bindString(2, msgcw);
+        String requestId = entity.getRequestId();
+        if (requestId != null) {
+            stmt.bindString(2, requestId);
         }
  
-        String msgtype = entity.getMsgtype();
-        if (msgtype != null) {
-            stmt.bindString(3, msgtype);
+        String method = entity.getMethod();
+        if (method != null) {
+            stmt.bindString(3, method);
         }
- 
-        String fromid = entity.getFromid();
-        if (fromid != null) {
-            stmt.bindString(4, fromid);
-        }
- 
-        String toid = entity.getToid();
-        if (toid != null) {
-            stmt.bindString(5, toid);
-        }
-        stmt.bindLong(6, entity.getTs());
- 
-        String msgid = entity.getMsgid();
-        if (msgid != null) {
-            stmt.bindString(7, msgid);
-        }
-        stmt.bindLong(8, entity.getResult());
  
         String downloadKey = entity.getDownloadKey();
         if (downloadKey != null) {
-            stmt.bindString(9, downloadKey);
+            stmt.bindString(4, downloadKey);
         }
     }
 
@@ -158,14 +114,9 @@ public class ServiceDao extends AbstractDao<Service, Long> {
     public Service readEntity(Cursor cursor, int offset) {
         Service entity = new Service( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // msgcw
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // msgtype
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // fromid
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // toid
-            cursor.getLong(offset + 5), // ts
-            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // msgid
-            cursor.getInt(offset + 7), // result
-            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8) // downloadKey
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // requestId
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // method
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3) // downloadKey
         );
         return entity;
     }
@@ -173,14 +124,9 @@ public class ServiceDao extends AbstractDao<Service, Long> {
     @Override
     public void readEntity(Cursor cursor, Service entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setMsgcw(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setMsgtype(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setFromid(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setToid(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setTs(cursor.getLong(offset + 5));
-        entity.setMsgid(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
-        entity.setResult(cursor.getInt(offset + 7));
-        entity.setDownloadKey(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
+        entity.setRequestId(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setMethod(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setDownloadKey(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
      }
     
     @Override

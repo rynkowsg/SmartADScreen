@@ -1,10 +1,10 @@
 package cn.com.smartadscreen.model.db.entity;
 
 import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 
 import java.io.Serializable;
+import org.greenrobot.greendao.annotation.Generated;
 
 /**
  * Created by Taro on 2017/3/24.
@@ -18,25 +18,14 @@ public class Service implements Serializable {
     @Id(autoincrement = true)
     private Long id ;
 
-    private String msgcw;
-    private String msgtype;
-    private String fromid;
-    private String toid;
-    private long ts;
-    private String msgid;
-    private int result;
+    private String requestId;
+    private String method;
     private String downloadKey;
-    @Generated(hash = 2030077840)
-    public Service(Long id, String msgcw, String msgtype, String fromid,
-            String toid, long ts, String msgid, int result, String downloadKey) {
+    @Generated(hash = 190490132)
+    public Service(Long id, String requestId, String method, String downloadKey) {
         this.id = id;
-        this.msgcw = msgcw;
-        this.msgtype = msgtype;
-        this.fromid = fromid;
-        this.toid = toid;
-        this.ts = ts;
-        this.msgid = msgid;
-        this.result = result;
+        this.requestId = requestId;
+        this.method = method;
         this.downloadKey = downloadKey;
     }
     @Generated(hash = 552382128)
@@ -48,47 +37,17 @@ public class Service implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    public String getMsgcw() {
-        return this.msgcw;
+    public String getRequestId() {
+        return this.requestId;
     }
-    public void setMsgcw(String msgcw) {
-        this.msgcw = msgcw;
+    public void setRequestId(String requestId) {
+        this.requestId = requestId;
     }
-    public String getMsgtype() {
-        return this.msgtype;
+    public String getMethod() {
+        return this.method;
     }
-    public void setMsgtype(String msgtype) {
-        this.msgtype = msgtype;
-    }
-    public String getFromid() {
-        return this.fromid;
-    }
-    public void setFromid(String fromid) {
-        this.fromid = fromid;
-    }
-    public String getToid() {
-        return this.toid;
-    }
-    public void setToid(String toid) {
-        this.toid = toid;
-    }
-    public long getTs() {
-        return this.ts;
-    }
-    public void setTs(long ts) {
-        this.ts = ts;
-    }
-    public String getMsgid() {
-        return this.msgid;
-    }
-    public void setMsgid(String msgid) {
-        this.msgid = msgid;
-    }
-    public int getResult() {
-        return this.result;
-    }
-    public void setResult(int result) {
-        this.result = result;
+    public void setMethod(String method) {
+        this.method = method;
     }
     public String getDownloadKey() {
         return this.downloadKey;
@@ -96,7 +55,5 @@ public class Service implements Serializable {
     public void setDownloadKey(String downloadKey) {
         this.downloadKey = downloadKey;
     }
-
-  
 
 }

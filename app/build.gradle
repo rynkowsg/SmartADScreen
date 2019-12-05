@@ -3,9 +3,15 @@ apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion '27.0.3'
-
+    signingConfigs {
+        adscreen {
+            keyAlias 'smartadh5screen'
+            storeFile file('D:/key/startai-key')
+            keyPassword 'startai'
+            storePassword 'startai'
+        }
+    }
+    compileSdkVersion 28
     aaptOptions {
         cruncherEnabled = false;
         useNewCruncher = false;
@@ -14,44 +20,40 @@ android {
         applicationId rootProject.ext.applicationId
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
-
         multiDexEnabled true
-
         ndk {
             //设置支持的SO库架构 'armeabi',
-            abiFilters 'armeabi','armeabi-v7a'
+            abiFilters 'armeabi', 'armeabi-v7a','x86'
         }
+        signingConfig signingConfigs.adscreen
     }
     buildTypes {
         release {
             minifyEnabled false
             buildConfigField "boolean", "LOG_DEBUG", "false"
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.adscreen
         }
         debug {
             // 显示Log
             buildConfigField "boolean", "LOG_DEBUG", rootProject.ext.debug_log_debug
-
-            minifyEnabled false
             zipAlignEnabled false
             shrinkResources false
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.adscreen
         }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
     sourceSets {
         main {
             jniLibs.srcDirs = ['libs']
         }
     }
-
-
+    productFlavors {
+    }
 }
 
 repositories {
@@ -64,53 +66,74 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation files('libs/zxing.jar')
     implementation rootProject.ext.dependencies["design"]
-    implementation rootProject.ext.dependencies["support-annotations"]
-    implementation rootProject.ext.dependencies["recyclerview-v7"]
+
+    //    implementation rootProject.ext.dependencies["appcompat-v7"]
+
+    //    implementation rootProject.ext.dependencies["support-annotations"]
+
+    //    implementation rootProject.ext.dependencies["recyclerview-v7"]
     implementation 'com.yanzhenjie:permission:2.0.0-rc4'
-    implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+
     //视频播放
-    implementation 'com.shuyu:gsyVideoPlayer-java:4.1.2'
+    implementation('com.shuyu:gsyVideoPlayer-java:4.1.2') {
+        exclude group: 'com.android.support', module: 'support-v4'
+    }
     implementation 'com.shuyu:gsyVideoPlayer-ex_so:4.1.2'
+
     // CrossWalk aar
     implementation(name: 'crosswalk-shared-22.52.561.0', ext: 'aar')
     implementation files('libs/cron4j-2.2.5.jar')
-    implementation files('libs/startai-communicate-4.2.2.jar')
+
     // Android Utils
     implementation rootProject.ext.dependencies["utilcode"]
+
     // FastJson
     implementation rootProject.ext.dependencies["fastjson"]
+
     // Rx Java
     implementation rootProject.ext.dependencies["rxjava"]
     implementation rootProject.ext.dependencies["rxandroid"]
+
     // Android Log 库
     implementation rootProject.ext.dependencies["logger"]
+
     // EventBus
     implementation rootProject.ext.dependencies["eventbus"]
+
     // ButterKnife
     implementation rootProject.ext.dependencies["butterknife"]
     annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
+
     // Number ProgressBar
     implementation rootProject.ext.dependencies["numberprogressbar"]
+
     // Loading
     implementation rootProject.ext.dependencies["AVLoadingIndicatorView"]
+
     // Toast
     implementation rootProject.ext.dependencies["Toasty"]
+
     // Facebook 调试工具
     implementation rootProject.ext.dependencies["facebook.stetho"]
+
     // MarkDownView
     implementation rootProject.ext.dependencies["richtext"]
+
     // GreenDao
     implementation rootProject.ext.dependencies["greendao"]
     implementation rootProject.ext.dependencies["GreenDaoUpgradeHelper"]
+
     // AndServer
     implementation rootProject.ext.dependencies["andserver"]
+
     // Marquee View
     implementation rootProject.ext.dependencies["marqueeview"]
 
     //dagger2
     annotationProcessor 'com.google.dagger:dagger-compiler:2.11'
     implementation 'com.google.dagger:dagger:2.11'
+
     //glide
     implementation rootProject.ext.dependencies["glide"]
     implementation 'com.android.support:multidex:1.0.1'

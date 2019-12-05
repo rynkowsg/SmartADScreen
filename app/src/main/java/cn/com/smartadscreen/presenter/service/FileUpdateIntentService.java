@@ -59,13 +59,8 @@ public class FileUpdateIntentService extends IntentService {
 
     private Service getServiceFromJson(JSONObject msgRoot) {
         Service service = new Service();
-        service.setFromid(msgRoot.getString("fromid"));
-        service.setResult(0);
-        service.setMsgcw(msgRoot.getString("msgcw"));
-        service.setMsgid(msgRoot.getString("msgid"));
-        service.setMsgtype(msgRoot.getString("msgtype"));
-        service.setToid(msgRoot.getString("toid"));
-        service.setTs(System.currentTimeMillis());
+        service.setMethod(msgRoot.getString("method"));
+        service.setRequestId(msgRoot.getString("requestId"));
         return service;
     }
 }

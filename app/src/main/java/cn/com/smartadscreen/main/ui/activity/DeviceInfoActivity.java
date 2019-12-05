@@ -163,6 +163,7 @@ public class DeviceInfoActivity extends AppCompatActivity {
 
         if(!isPlanInitSuccess) {
             try {
+
                 List<DeviceInfoBean.NormalPlans> screenNormalPlans = bean.getScreenNormalPlans();
                 tvScreenTimeMon.setText(getPlanTime(screenNormalPlans.get(0)));
                 tvScreenTimeTue.setText(getPlanTime(screenNormalPlans.get(1)));

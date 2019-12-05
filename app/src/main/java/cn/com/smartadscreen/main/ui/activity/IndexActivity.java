@@ -60,7 +60,6 @@ import cn.com.smartadscreen.model.db.entity.Screen;
 import cn.com.smartadscreen.model.db.manager.BroadcastTableHelper;
 import cn.com.smartadscreen.model.sp.SPManager;
 import cn.com.smartadscreen.presenter.main.IndexPresenter;
-import cn.com.smartadscreen.presenter.service.PluginServer;
 import cn.com.smartadscreen.presenter.task.StateDate;
 import cn.com.smartadscreen.presenter.update.DataSourceUpdateModule;
 import cn.com.smartadscreen.utils.SmartTimerService;
@@ -126,7 +125,7 @@ public class IndexActivity extends BaseActivityV1 implements XWalkInitializer.XW
                 .build()
                 .inject(this);
         // SmartAD Loaded
-        PluginServer.sendHostLoaded();
+//        PluginServer.sendHostLoaded();
 
 
         SPUtils.getInstance().put("getFragmentPos", 5);
@@ -194,14 +193,14 @@ public class IndexActivity extends BaseActivityV1 implements XWalkInitializer.XW
     protected void onResume() {
         super.onResume();
         Logger.d("index" + "onResume");
-        PluginServer.sendServerPause(false);
+//        PluginServer.sendServerPause(false);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         Logger.d("index" + "onPause");
-        PluginServer.sendServerPause(true);
+//        PluginServer.sendServerPause(true);
     }
 
     @Override

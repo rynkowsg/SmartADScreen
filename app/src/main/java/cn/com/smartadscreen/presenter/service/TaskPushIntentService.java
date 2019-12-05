@@ -129,6 +129,7 @@ public class TaskPushIntentService extends IntentService {
                 SmartToast.info(" 消息即将推送展示! ");
             } else {
                 SmartToast.info(" 没有获取到播放列表! ");
+                LogUtil.d(" 没有获取到播放列表! ");
                 SPManager.getInstance().saveCurrentBtId(-1L);
                 // nothing to show
                 JSONObject nothingJson = new JSONObject();

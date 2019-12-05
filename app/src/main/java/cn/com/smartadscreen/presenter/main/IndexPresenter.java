@@ -1,12 +1,9 @@
 package cn.com.smartadscreen.presenter.main;
 
-import android.graphics.Bitmap;
 import android.os.Handler;
-import android.view.View;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.blankj.utilcode.util.FileUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.facebook.stetho.common.LogUtil;
@@ -16,8 +13,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -36,7 +31,6 @@ import cn.com.smartadscreen.model.bean.OnVideoPlayer;
 import cn.com.smartadscreen.model.bean.StatusBarBean;
 import cn.com.smartadscreen.model.bean.TaskPush;
 import cn.com.smartadscreen.model.bean.config.Config;
-import cn.com.smartadscreen.model.bean.event.OnScreenshot;
 
 import cn.com.smartadscreen.model.sp.SPManager;
 import cn.com.smartadscreen.presenter.task.HourSyncTask;
@@ -150,48 +144,15 @@ public class IndexPresenter implements IndexContract.Presenter {
                 //播放
                 sendState(1, false);
                 mWebFragment.onTaskPush(taskPush.getMessage());//todo 修改引用
-                Logger.i("taskPush"+taskPush.getTimeType()+"/n"+taskPush.getLogoPath());
+                Logger.i("taskPush"+taskPush.getTimeType()+" / "+taskPush.getLogoPath());
                 operateStatusBar(taskPush.getTimeType(), taskPush.getLogoPath());
-                Logger.i("播表播放...");
-                Logger.i("推送的消息：" + taskPush.getMessage());
+                Logger.i("播表播放,推送的消息：" + taskPush.getMessage());
             }
         }
 
     }
 
-    @Subscribe(threadMode = ThreadMode.BACKGROUND) //todo 修改 原来是MAIN
-    public void takeScreenshot(OnScreenshot screenshot) {
-        Logger.i("开始截屏");
-        // 获取屏幕
-        View dView = view.getWindow().getDecorView();
-        dView.setDrawingCacheEnabled(true);
-        dView.buildDrawingCache();
-        Bitmap bmp = dView.getDrawingCache();
-        if (bmp != null) {
-            try {
-                // 获取内置SD卡路径
-                String sdCardPath = SPManager.getInstance().getSdcardPath();
-                String imagesPath = sdCardPath + "/startai/images/";
-                FileUtils.createOrExistsDir(imagesPath);
-                // 图片文件路径
-                String filePath = imagesPath + "/screenshot" + "_" + System.currentTimeMillis() + ".png";
 
-                File file = new File(filePath);
-                FileOutputStream os = new FileOutputStream(file);
-                bmp.compress(Bitmap.CompressFormat.PNG, 100, os);
-                os.flush();
-                os.close();
-                screenshot.setScreenShotPath(filePath);
-                StartaiCommunicate.getInstance().send(view.getApplicationContext(),
-                        CommunicateType.COMMUNICATE_TYPE_SCREENSHOT,
-                        JSON.toJSONString(screenshot));
-                Logger.i("截屏成功");
-            } catch (Exception e) {
-                e.printStackTrace();
-                Logger.i("截屏失败");
-            }
-        }
-    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void sendState(StateDate stateDate) {

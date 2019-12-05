@@ -51,7 +51,7 @@ public class DownloadManager {
     // url 与 uuid key 的映射表
     private static Map<String, String> urlKeyMappingMap = new HashMap<>();
 
-    public static void addDownloadTask(String downloadKey, DownloadTask task){
+    public static void addDownloadTask(String downloadKey, DownloadTask task) {
 
         if (downloadTaskMap.containsKey(downloadKey)) {
             List<DownloadTask> downloadTasks = downloadTaskMap.get(downloadKey);
@@ -60,7 +60,7 @@ public class DownloadManager {
                 if (downloadTask == null || downloadTask.getUrl() == null) {
                     continue;
                 }
-                if(downloadTask.isSame(task)){
+                if (downloadTask.isSame(task)) {
                     return;
                 }
             }
@@ -78,25 +78,25 @@ public class DownloadManager {
 
     }
 
-    public synchronized static void startTask(String downloadKey, String tag){
+    public synchronized static void startTask(String downloadKey, String tag) {
         checkKNMapping(downloadKey, tag);
 
         // report to nmc
-        ReportMsg reportMsg  = new ReportMsg();
-        reportMsg.setResult(-1);
+        ReportMsg reportMsg = new ReportMsg();
+        reportMsg.setCode(0);
         reportMsg.setDownloadKey(downloadKey);
         JSONObject content = new JSONObject();
         content.put("msg", "下载开始");
         content.put("downloadKey", downloadKey);
         reportMsg.setContent(content);
-        EventBus.getDefault().post( reportMsg );
+        EventBus.getDefault().post(reportMsg);
 
 
         if (downloadTaskMap.containsKey(downloadKey)) {
             LogUtil.d("live", " 任务列表中存在此下载任务");
             // record remarks
             ArrayList<String> remarks = new ArrayList<>();
-            StringBuilder remark ;
+            StringBuilder remark;
 
             List<DownloadTask> downloadTaskList = downloadTaskMap.get(downloadKey);
             for (DownloadTask downloadTask : downloadTaskList) {
@@ -145,8 +145,8 @@ public class DownloadManager {
             EventBus.getDefault().post(new DownloadFinished(downloadKey, knMapping.getName()));
 
             // report to nmc
-            reportMsg  = new ReportMsg();
-            reportMsg.setResult(1);
+            reportMsg = new ReportMsg();
+            reportMsg.setCode(0);
             reportMsg.setDownloadKey(downloadKey);
             content = new JSONObject();
             content.put("msg", "下载完成");
@@ -157,7 +157,7 @@ public class DownloadManager {
 
     }
 
-    public synchronized static void checkKNMapping(String downloadKey, String tag){
+    public synchronized static void checkKNMapping(String downloadKey, String tag) {
         KNMapping knMapping = DBManager.getDaoSession().getKNMappingDao().queryBuilder()
                 .where(KNMappingDao.Properties.DownloadKey.eq(downloadKey))
                 .unique();
@@ -167,7 +167,7 @@ public class DownloadManager {
         }
     }
 
-    public synchronized static void onProgress(DownloadProgressBean bean){
+    public synchronized static void onProgress(DownloadProgressBean bean) {
         String url = bean.getUrl();
         int progress = bean.getProgress();
 
@@ -176,7 +176,7 @@ public class DownloadManager {
         //当前url 在下载集合中，即播表相关文件
         if (urlKeyMappingMap.containsKey(url)) {
 
-            LogUtil.d("live", " urlKeyMappingMap.containsKey(url): " );
+            LogUtil.d("live", " urlKeyMappingMap.containsKey(url): ");
 
             String downloadKey = urlKeyMappingMap.get(url);
             List<DownloadTask> downloadTasks = downloadTaskMap.get(downloadKey);
@@ -189,7 +189,7 @@ public class DownloadManager {
                     if (SPManager.getManager().getBoolean(SPManager.KEY_ENABLED_TOAST_DOWNLOAD_INFO, false)) {
                         String message = "文件名称: " + downloadTask.getName() +
                                 "\n下载进度: " + progress;
-                        SmartToast.normalShallowColor(message);
+                        SmartToast.normal(message);
                     }
 
                     // timer to check download
@@ -202,7 +202,7 @@ public class DownloadManager {
 
                         if (checkDownload(downloadKey)) {
 
-                            LogUtil.d("live", " TimerUtils.close " );
+                            LogUtil.d("live", " TimerUtils.close ");
                             TimerUtils.close(downloadKey);
                             if (downloadTaskMap.containsKey(downloadKey)) {
                                 downloadTaskMap.remove(downloadKey);
@@ -226,14 +226,15 @@ public class DownloadManager {
                             LogUtil.d("live", " post DownloadFinished : " + knMapping.getName());
                             EventBus.getDefault().post(new DownloadFinished(downloadKey, knMapping.getName()));
                             // report to nmc
-                            ReportMsg reportMsg  = new ReportMsg();
-                            reportMsg.setResult(1);
+                            ReportMsg reportMsg = new ReportMsg();
+                            reportMsg.setCode(0);
+                            reportMsg.setError("");
                             reportMsg.setDownloadKey(downloadKey);
                             JSONObject content = new JSONObject();
                             content.put("msg", "下载完成");
                             content.put("downloadKey", downloadKey);
                             reportMsg.setContent(content);
-                            EventBus.getDefault().post( reportMsg );
+                            EventBus.getDefault().post(reportMsg);
                         }
                     }
                     break;
@@ -262,6 +263,7 @@ public class DownloadManager {
 
     /**
      * 检测 downloadKey 对应的任务是否全部下载完成
+     *
      * @param downloadKey
      * @return
      */
@@ -269,13 +271,13 @@ public class DownloadManager {
         List<DownloadTask> downloadTasks = downloadTaskMap.get(downloadKey);
         for (DownloadTask downloadTask : downloadTasks) {
             if (downloadTask.getProgress() < 100) {
-                return false ;
+                return false;
             }
         }
         return true;
     }
 
-    public synchronized static void onError(DownloadProgressBean bean){
+    public synchronized static void onError(DownloadProgressBean bean) {
         String url = bean.getUrl();
         String errorCode = bean.getErrorCode();
 
@@ -286,18 +288,18 @@ public class DownloadManager {
                 if (downloadTask.getUrl().equals(url)) {
                     downloadTask.setErrorCode(errorCode);
 
-                    ReportMsg reportMsg  = new ReportMsg();
-                    switch (errorCode) {
-                        case "-1018" :
-                        case "-1009":
-                        case "-1005":
-                            reportMsg.setResult(-1);
-                            break;
-                        default:
-                            reportMsg.setResult(0);
-                            break;
-                    }
-
+                    ReportMsg reportMsg = new ReportMsg();
+//                    switch (errorCode) {
+//                        case "-1018":
+//                        case "-1009":
+//                        case "-1005":
+//                            reportMsg.setResult(-1);
+//                            break;
+//                        default:
+//                            reportMsg.setResult(0);
+//                            break;
+//                    }
+                    reportMsg.setCode(5);
                     reportMsg.setDownloadKey(downloadKey);
                     JSONObject content = new JSONObject();
                     content.put("msg", "下载文件失败，" + DownloadErrorCode.getDownloadMsgByCode(Integer.parseInt(errorCode)));
@@ -307,7 +309,6 @@ public class DownloadManager {
                     content.put("hash", downloadTask.getHash());
                     reportMsg.setContent(content);
                     EventBus.getDefault().post(reportMsg);
-
 
 
                     SmartToast.error(downloadTask.getName() + " 文件下载失败!");
@@ -324,16 +325,16 @@ public class DownloadManager {
         }
     }
 
-    public static String getDownloadKey(){
+    public static String getDownloadKey() {
         return UUID.randomUUID().toString();
     }
 
-    private static class CheckDownloadTask extends TimerTask{
+    private static class CheckDownloadTask extends TimerTask {
 
-        private String downloadKey ;
+        private String downloadKey;
 
-        private CheckDownloadTask(String downloadKey){
-            this.downloadKey = downloadKey ;
+        private CheckDownloadTask(String downloadKey) {
+            this.downloadKey = downloadKey;
         }
 
         @Override
@@ -365,11 +366,11 @@ public class DownloadManager {
 
                     remark = new StringBuilder();
 
-                    if(!TextUtils.isEmpty(localIP)){
+                    if (!TextUtils.isEmpty(localIP)) {
                         try {
                             URL downloadUrl = new URL(url);
                             String downloadIP = downloadUrl.getHost();
-                            if(downloadIP.startsWith("192.168") && !isSameLan(localIP, downloadIP)){
+                            if (downloadIP.startsWith("192.168") && !isSameLan(localIP, downloadIP)) {
                                 remark.append("本机IP地址改变，与下载地址不在同一个局域网内，取消定时检测下载任务，并删除相应播表");
                                 remarks.add(remark.toString());
                                 SmartLocalLog.writeLog(new LogMsg(LogMsg.TYPE_HANDLER, "Native", "Native",
@@ -406,9 +407,9 @@ public class DownloadManager {
                 }
             }
 
-            if(!isFound) {
+            if (!isFound) {
                 TimerUtils.close(downloadKey);
-                Logger.d("==================任务关闭：" + downloadKey  );
+                Logger.d("==================任务关闭：" + downloadKey);
             }
 
             // record
@@ -417,13 +418,13 @@ public class DownloadManager {
         }
 
         //判断是否是同一局域网
-        private Boolean isSameLan(String ip1, String ip2){
-            try{
+        private Boolean isSameLan(String ip1, String ip2) {
+            try {
                 String[] ip1Nums = ip1.split(".");
                 String[] ip2Nums = ip2.split(".");
                 return ip1.startsWith("192.168") && ip2.startsWith("192.168") &&
                         Integer.parseInt(ip1Nums[2]) == Integer.parseInt(ip2Nums[2]);
-            } catch (Exception e){
+            } catch (Exception e) {
                 return false;
             }
         }

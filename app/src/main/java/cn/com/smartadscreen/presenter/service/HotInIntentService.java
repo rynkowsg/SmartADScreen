@@ -24,6 +24,7 @@ import cn.com.smartadscreen.presenter.update.HotCodeUpdateModule;
 public class HotInIntentService extends IntentService {
 
     private Service service;
+
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
      *
@@ -33,7 +34,7 @@ public class HotInIntentService extends IntentService {
         super(name);
     }
 
-    public HotInIntentService(){
+    public HotInIntentService() {
         this("HotInIntentService");
     }
 
@@ -57,7 +58,7 @@ public class HotInIntentService extends IntentService {
 
     }
 
-    private void handlerWebUpdate(JSONObject content){
+    private void handlerWebUpdate(JSONObject content) {
         String downloadKey = DownloadManager.getDownloadKey();
         service.setDownloadKey(downloadKey);
         ServiceHelper.getInstance().insertOrRelease(service);
@@ -77,7 +78,7 @@ public class HotInIntentService extends IntentService {
         }
     }
 
-    private void handlerWebFileUpdate(JSONObject content){
+    private void handlerWebFileUpdate(JSONObject content) {
         String downloadKey = DownloadManager.getDownloadKey();
         service.setDownloadKey(downloadKey);
         ServiceHelper.getInstance().insertOrRelease(service);
@@ -112,8 +113,8 @@ public class HotInIntentService extends IntentService {
     }
 
     private void reportHashException(String downloadKey, String url, String path, String hash) {
-        ReportMsg reportMsg  = new ReportMsg();
-        reportMsg.setResult(0);
+        ReportMsg reportMsg = new ReportMsg();
+        reportMsg.setCode(5);
         reportMsg.setDownloadKey(downloadKey);
         JSONObject content = new JSONObject();
         content.put("msg", "Hash 值重复, 无需下载!");
@@ -122,32 +123,32 @@ public class HotInIntentService extends IntentService {
         content.put("path", path);
         content.put("hash", hash);
         reportMsg.setContent(content);
-        EventBus.getDefault().post( reportMsg );
+        EventBus.getDefault().post(reportMsg);
     }
 
     private void reportJsonException(String downloadKey) {
-        ReportMsg reportMsg  = new ReportMsg();
-        reportMsg.setResult(0);
+        ReportMsg reportMsg = new ReportMsg();
+        reportMsg.setCode(5);
         reportMsg.setDownloadKey(downloadKey);
         JSONObject content = new JSONObject();
         content.put("msg", "Json格式错误, 请检查(HotCodeIn)!");
         content.put("downloadKey", downloadKey);
         reportMsg.setContent(content);
-        EventBus.getDefault().post( reportMsg );
+        EventBus.getDefault().post(reportMsg);
     }
 
     private boolean checkFile(String path, String hash) {
         String localFilePath = SPManager.getManager().getString(SPManager.KEY_APP_WWW_FOLDER)
                 + "/" + path;
-        Logger.i(localFilePath + "   " + hash + "   " + FileUtils.getFileMD5ToString(localFilePath).toLowerCase() + "  " + FileUtils.isFileExists(localFilePath) );
+        Logger.i(localFilePath + "   " + hash + "   " + FileUtils.getFileMD5ToString(localFilePath).toLowerCase() + "  " + FileUtils.isFileExists(localFilePath));
         if (FileUtils.isFileExists(localFilePath)) {
             if (FileUtils.getFileMD5ToString(localFilePath).equalsIgnoreCase(hash)) {
-                return false ;
+                return false;
             } else {
-                return true ;
+                return true;
             }
         } else {
-            return true ;
+            return true;
         }
     }
 

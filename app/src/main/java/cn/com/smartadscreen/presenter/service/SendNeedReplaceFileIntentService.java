@@ -123,7 +123,7 @@ public class SendNeedReplaceFileIntentService extends IntentService {
         JSONArray sendContent = new JSONArray();
 
         JSONObject contentObject = JSON.parseObject(content);
-        contentObject = contentObject.getJSONObject("content");
+        contentObject = contentObject.getJSONObject("params");
         JSONArray screens = contentObject.getJSONArray("screens");
         for (int i = 0, screenSize = screens.size(); i < screenSize; i++) {
             JSONObject screen = screens.getJSONObject(i);

@@ -13,7 +13,7 @@ import com.alibaba.fastjson.JSONObject;
  * o8888888o
  * 88" . "88
  * (| -_- |)
- *  O\ = /O
+ * O\ = /O
  * ___/`---'\____
  * .   ' \\| |// `.
  * / \\||| : |||// \
@@ -27,37 +27,51 @@ import com.alibaba.fastjson.JSONObject;
  * \ \ `-. \_ __\ /__ _/ .-` / /
  * ======`-.____`-.___\_____/___.-`____.-'======
  * `=---='
- *          .............................................
- *           佛曰：bug泛滥，我已瘫痪！
+ * .............................................
+ * 佛曰：bug泛滥，我已瘫痪！
  */
 public class ReportMsg {
 
-    private int result;
+
+    private int code;
+    private String error;
+    private String requestId;
     private JSONObject content;
     private JSONArray contentArray;
     private String downloadKey;
 
-    public ReportMsg(int result, JSONObject content, String downloadKey) {
-        this.result = result;
+    public ReportMsg(int code, String requestId, JSONObject content, String downloadKey) {
+        this.code = code;
+        this.requestId = requestId;
         this.content = content;
         this.downloadKey = downloadKey;
     }
 
-    public ReportMsg(int result, JSONArray content, String downloadKey) {
-        this.result = result;
-        this.contentArray = content;
+    public ReportMsg(int code, String requestId, JSONArray contentArray, String downloadKey) {
+        this.code = code;
+        this.requestId = requestId;
+        this.contentArray = contentArray;
         this.downloadKey = downloadKey;
     }
 
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
+
+
     public ReportMsg() {
-    }
-
-    public int getResult() {
-        return result;
-    }
-
-    public void setResult(int result) {
-        this.result = result;
     }
 
     public JSONObject getContent() {

@@ -50,8 +50,6 @@ import cn.com.smartadscreen.utils.JSONUtils;
 import cn.com.smartadscreen.utils.SmartToast;
 
 
-
-
 /**
  * Created by Taro on 2017/3/13.
  * Data Source Update 模块主入口
@@ -71,9 +69,10 @@ public class DataSourceUpdateModule {
 
     private static DataSourceUpdateModule instance;
 
-    private DataSourceUpdateModule(){}
+    private DataSourceUpdateModule() {
+    }
 
-    private static DataSourceUpdateModule newInstance(){
+    private static DataSourceUpdateModule newInstance() {
         if (instance == null) {
             instance = new DataSourceUpdateModule();
             if (!EventBus.getDefault().isRegistered(instance)) {
@@ -84,7 +83,7 @@ public class DataSourceUpdateModule {
     }
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
-    public void onDownloadFinished(DownloadFinished download){
+    public void onDownloadFinished(DownloadFinished download) {
         if (download.getTag().equals(TAG)) {
             BroadcastTable bt = DBManager.getDaoSession().getBroadcastTableDao()
                     .queryBuilder()
@@ -99,17 +98,16 @@ public class DataSourceUpdateModule {
 
                 Logger.i(" onDownloadFinished  doReplaceBroadcastTable :" + bt.getId());
 
-                LogUtil.d("live", " onDownloadFinished  start SendNeedReplaceFileIntentService : "+ bt.getId() );
+                LogUtil.d("live", " onDownloadFinished  start SendNeedReplaceFileIntentService : " + bt.getId());
                 doReplaceBroadcastTable(bt.getId());
 
                 long curBtId = SPManager.getInstance().getCurrentBtId();
                 BroadcastTable curBt = BroadcastTableHelper.getInstance().queryById(curBtId);
                 //如果，当前播放的播表的修改时间大于 已下载完成播表的修改时间，不再推送展示当前下载完成的播表
-                if(curBt != null && curBt.getModifyDate().getTime() > bt.getModifyDate().getTime()) {
+                if (curBt != null && curBt.getModifyDate().getTime() > bt.getModifyDate().getTime()) {
                     return;
                 }
                 doTaskPush(false);
-
 
 
                 // TODO: 2017/6/16  对短消息进行处理, 短消息不执行推送
@@ -132,11 +130,11 @@ public class DataSourceUpdateModule {
         context.startService(intent);
     }
 
-    public static void doDataUpdate(JSONObject msgObject){
+    public static void doDataUpdate(JSONObject msgObject) {
         doDataUpdate(msgObject, false);
     }
 
-    public static void doDataUpdate(JSONObject msgObject, boolean mute){
+    public static void doDataUpdate(JSONObject msgObject, boolean mute) {
         if (!mute) {
             SmartToast.info("收到一条播表消息!");
             //播放声音
@@ -155,7 +153,7 @@ public class DataSourceUpdateModule {
     }
 
     // 执行任务分发
-    public static void doTaskPush(boolean pushForInit){
+    public static void doTaskPush(boolean pushForInit) {
         doTaskPush(pushForInit, false, null);
 
     }
@@ -170,13 +168,13 @@ public class DataSourceUpdateModule {
     }
 
     // 数据文件去重
-    public static void doUniqueDataSourceFile(){
+    public static void doUniqueDataSourceFile() {
         Context context = Config.getContext();
         Intent intent = new Intent(context, UniqueDataSourceFileIntentService.class);
         context.startService(intent);
     }
 
-    public static void doClearData(){
+    public static void doClearData() {
         Context context = Config.getContext();
         Intent intent = new Intent(context, ClearDataIntentService.class);
         context.startService(intent);
@@ -204,7 +202,7 @@ public class DataSourceUpdateModule {
         }
     }
 
-    public static void doDelFiles(JSONObject msgObject){
+    public static void doDelFiles(JSONObject msgObject) {
         String downloadKey = DownloadManager.getDownloadKey();
         Service service = getServiceFromJson(msgObject);
         service.setDownloadKey(downloadKey);
@@ -212,8 +210,9 @@ public class DataSourceUpdateModule {
         ServiceHelper.getInstance().insertOrRelease(service);
         long currentBtId = SPManager.getInstance().getCurrentBtId();
 
-        JSONObject content = msgObject.getJSONObject("content");
+        JSONObject content = msgObject.getJSONObject("params");
         JSONArray ids = content.getJSONArray("ids");
+        String requestId = msgObject.getString("requestId");
         if (ids != null && ids.size() > 0) {
             Long[] keys = new Long[ids.size()];
             for (int i = 0; i < ids.size(); i++) {
@@ -228,12 +227,12 @@ public class DataSourceUpdateModule {
 
             JSONObject responseContent = new JSONObject();
             responseContent.put("ids", ids);
-            ReportMsg reportMsg = new ReportMsg(1, responseContent, downloadKey);
+            ReportMsg reportMsg = new ReportMsg(0,requestId, responseContent, downloadKey);
             EventBus.getDefault().post(reportMsg);
         } else {
             JSONObject responseContent = new JSONObject();
             responseContent.put("msg", "删除播表数组不存在或者为空");
-            ReportMsg reportMsg = new ReportMsg(0, responseContent, downloadKey);
+            ReportMsg reportMsg = new ReportMsg(5, requestId,responseContent, downloadKey);
             EventBus.getDefault().post(reportMsg);
         }
     }
@@ -244,25 +243,27 @@ public class DataSourceUpdateModule {
         service.setDownloadKey(downloadKey);
         ServiceHelper.getInstance().insertOrRelease(service);
 
-        JSONObject content = msgObject.getJSONObject("content");
+        JSONObject content = msgObject.getJSONObject("params");
+        String requestId = msgObject.getString("requestId");
         String id = content.getString("id");
         if (id != null) {
             playBtById(id);
 
             JSONObject responseContent = new JSONObject();
             responseContent.put("id", id);
-            ReportMsg reportMsg = new ReportMsg(1, responseContent, downloadKey);
+            ReportMsg reportMsg = new ReportMsg(0, requestId, responseContent, downloadKey);
             EventBus.getDefault().post(reportMsg);
         } else {
             JSONObject responseContent = new JSONObject();
             responseContent.put("msg", "缺少播放Id");
-            ReportMsg reportMsg = new ReportMsg(0, responseContent, downloadKey);
+            ReportMsg reportMsg = new ReportMsg(5, requestId, responseContent, downloadKey);
             EventBus.getDefault().post(reportMsg);
         }
     }
 
     /**
      * 播放制定id播表
+     *
      * @param id 数据库中播表id， -1为播放当前播表
      */
     public static void playBtById(@NonNull String id) {
@@ -278,18 +279,14 @@ public class DataSourceUpdateModule {
 
     public static Service getServiceFromJson(JSONObject msgRoot) {
         Service service = new Service();
-        service.setFromid(msgRoot.getString("fromid"));
-        service.setResult(0);
-        service.setMsgcw(msgRoot.getString("msgcw"));
-        service.setMsgid(msgRoot.getString("msgid"));
-        service.setMsgtype(msgRoot.getString("msgtype"));
-        service.setToid(msgRoot.getString("toid"));
-        service.setTs(System.currentTimeMillis());
+        service.setMethod(msgRoot.getString("method"));
+        service.setRequestId(msgRoot.getString("requestId"));
         return service;
     }
 
+
     public static void createItemTypeFile(ContentItemBean itemBean) {
-        if(itemBean == null) return;
+        if (itemBean == null) return;
         // 创建 itemtype 文件
         String itemTypeFilePath = SPManager.getInstance().getAppDataPath()
                 + "/" + System.currentTimeMillis() + "." + itemBean.getItemtype();

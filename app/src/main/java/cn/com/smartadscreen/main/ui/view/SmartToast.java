@@ -61,15 +61,15 @@ public class SmartToast {
     }
 
     public static void normalShallowColor(@NonNull String message){
-        Observable.just(message)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(s -> {
-                    Toasty.Config.getInstance().setTextColor(0xc8ffffff).apply();
-                    cancel();
-                    mToast = Toasty.custom(Application.getContext(), message, null, 0x60000000, Toast.LENGTH_SHORT, false, true);
-                    mToast.show();
-                    Toasty.Config.reset();
-                });
+//        Observable.just(message)
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(s -> {
+//                    Toasty.Config.getInstance().setTextColor(0xc8ffffff).apply();
+//                    cancel();
+//                    mToast = Toasty.custom(Application.getContext(), message, null, 0x60000000, Toast.LENGTH_SHORT, false, true);
+//                    mToast.show();
+//                    Toasty.Config.reset();
+//                });
     }
 
     public static void cancel(){

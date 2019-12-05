@@ -10,12 +10,40 @@ import com.alibaba.fastjson.JSONObject;
 
 public class ReportErrorMsg {
 
+    private String error;
+    private int code;
+    private String requestId;
+
     private int result;
     private String toid;
     private long ts;
     private String msgcw;
     private String msgtype;
     private JSONObject content;
+
+    public String getRequestId() {
+        return requestId;
+    }
+
+    public void setRequestId(String requestId) {
+        this.requestId = requestId;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
 
     public int getResult() {
         return result;

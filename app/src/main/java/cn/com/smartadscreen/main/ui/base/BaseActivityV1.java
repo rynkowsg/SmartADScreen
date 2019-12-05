@@ -50,9 +50,10 @@ public abstract class BaseActivityV1 extends AppCompatActivity implements IActiv
      **/
     public void getPremissions() {
 
+        //Manifest.permission.SYSTEM_ALERT_WINDOW,
         XXPermissions.with(this).permission(Manifest.permission.INTERNET,
                 Manifest.permission.ACCESS_NETWORK_STATE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.WAKE_LOCK, Manifest.permission.SYSTEM_ALERT_WINDOW,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.WAKE_LOCK,
                 Manifest.permission.READ_EXTERNAL_STORAGE).request(new OnPermission() {
             @Override
             public void hasPermission(List<String> list, boolean b) {

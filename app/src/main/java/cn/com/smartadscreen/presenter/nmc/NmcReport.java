@@ -66,13 +66,11 @@ public class NmcReport {
 
         if (service != null) {
             JSONObject serviceJson = (JSONObject) JSON.toJSON(service);
-            serviceJson.put("toid", service.getFromid());
-            serviceJson.put("ts", System.currentTimeMillis());
-            serviceJson.put("result", reportMsg.getResult());
-            serviceJson.put("content", reportMsg.getContent() == null ? reportMsg.getContentArray() : reportMsg.getContent());
-            serviceJson.put("msgcw", getReportMsgcw(service.getMsgcw()));
-            serviceJson.remove("downloadKey");
-            serviceJson.remove("id");
+            serviceJson.put("requestId", service.getRequestId());
+            serviceJson.put("method", service.getMethod());
+            serviceJson.put("code", reportMsg.getCode());
+            serviceJson.put("error", reportMsg.getError());
+            serviceJson.put("params", reportMsg.getContent() == null ? reportMsg.getContentArray() : reportMsg.getContent());
 
             StartaiCommunicate.getInstance().send(Config.getContext(),
                     CommunicateType.COMMUNICATE_TYPE_MIOF, serviceJson.toString());
@@ -95,6 +93,9 @@ public class NmcReport {
     }
 
     public static String getReportMsgcw(String requestMsgcw){
+        if(requestMsgcw == null){
+            requestMsgcw = "";
+        }
         String msgcw = "";
         switch (requestMsgcw) {
             case "0x01":

@@ -65,6 +65,10 @@ public  class DefaultFileFragment extends BaseFragment {
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void localFile(DeviceInfoBean bean) {
         LocalFileDesc localFileDesc = bean.getLocalFileDesc();
+        if(localFileDesc==null){
+            System.out.println("localFileDesc==null");
+            return;
+        }
         ArrayList<LocalFileDesc.Content> list=localFileDesc.getList();
         for (int i = 0; i<list.size(); i++) {
             Log.i("DefaultQRFragment","json="+json);
