@@ -21,6 +21,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionName rootProject.ext.versionName
+        versionCode rootProject.ext.versionCode
         multiDexEnabled true
         ndk {
             //设置支持的SO库架构 'armeabi',
