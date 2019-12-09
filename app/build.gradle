@@ -24,7 +24,7 @@ android {
         multiDexEnabled true
         ndk {
             //设置支持的SO库架构 'armeabi',
-            abiFilters 'armeabi', 'armeabi-v7a','x86'
+            abiFilters 'armeabi', 'armeabi-v7a', 'x86'
         }
         signingConfig signingConfigs.adscreen
     }
