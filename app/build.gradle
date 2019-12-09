@@ -6,7 +6,7 @@ android {
     signingConfigs {
         adscreen {
             keyAlias 'smartadh5screen'
-            storeFile file('D:/key/startai-key')
+            storeFile file('../startai-key')
             keyPassword 'startai'
             storePassword 'startai'
         }
