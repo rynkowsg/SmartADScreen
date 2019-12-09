@@ -653,6 +653,7 @@ public class DataUpdateIntentService extends IntentService {
                 }
             }
         } else {
+            System.out.println("checkLocalFile.file.getAbsolutePath() = " + file.getAbsolutePath());
             return false;
         }
     }
